@@ -1,0 +1,32 @@
+.columnOne {
+    width: 48%;
+    float: left;
+}
+
+.columnTwo {
+    width: 48%;
+    float: right;
+}
+
+.subList {
+    padding-left: 10px;
+}
+
+.spacer {
+    height: 1em;
+}
+
+.header {
+    font-size: 1em;
+    font-weight:bold;
+    background-color:#eee;
+    padding-left:20px;
+}
+
+.buff {
+    color: green;
+}
+
+.debuff {
+    color: red;
+}

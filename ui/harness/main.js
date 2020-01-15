@@ -1,0 +1,16 @@
+const assert = require('assert').strict
+
+const e = React.createElement
+assert(e)
+
+const content = document.getElementById('content')
+assert(content)
+
+function r(...elements) {
+    ReactDOM.render(e('div', null, ...elements), content)
+}
+
+// require('./character-card')(r, e)
+// require('./player-info')(r, e)
+// require('./player-sheet')(r, e)
+require('./connection-info')(r, e)
