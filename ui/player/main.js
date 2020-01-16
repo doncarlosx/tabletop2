@@ -20,6 +20,10 @@ state.getSocket().addEventListener('close', () => {
 state.getSocket().addEventListener('message', messageHandler)
 
 
+// Exports
+window.state = state
+
+
 // Functions
 function newWebSocket() {
     return new WebSocket(getWebSocketURL())

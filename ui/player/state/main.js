@@ -3,6 +3,7 @@ module.exports = () => {
 
     let socket
     let connected = false
+    let players = []
 
     function addWebSocket(s) {
         assert(s)
@@ -26,11 +27,21 @@ module.exports = () => {
         return connected
     }
 
+    function setPlayers(p) {
+        players = p
+    }
+
+    function getPlayers() {
+        return players
+    }
+
     return {
         addWebSocket,
         getSocket,
         setConnected,
         setDisconnected,
         isConnected,
+        setPlayers,
+        getPlayers,
     }
 }

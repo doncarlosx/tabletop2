@@ -4,6 +4,8 @@ const WebSocket = require('ws')
 const state = require('./state/main')()
 const messageHandler = require('./message-handler/main')(state)
 
+const messages = require('../src/messages/main')
+
 const server = new WebSocket.Server({
     port: 8081,
 })
@@ -16,6 +18,7 @@ function addNewSocket(socket) {
     state.addSocket(socket)
     socket.on('close', removeClosedSocket)
     socket.on('message', messageHandler)
+    socket.send(messages.writeSyncPlayers([]))
 }
 
 function removeClosedSocket(code, reason) {

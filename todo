@@ -1,19 +1,8 @@
-component for connecting to server
-websockets
-http server
-websocket server
-character data on disk
-component for updating character health
-component for opening feat/spell/etc info
 
-should the initial interface be editing a json file on disk?
-	makes it hard to validate the conditions
-	but easy to update hp and stuff
+message comes into handler
+read string
+parse json
+get command
+emit event
 
-component for adding a condition to a character
-condition definitions
-
-start out not connected
-the only thing the player should see is please wait, trying to connect
-once connected, this component doesn't really show anything
-	or does it show connected to as a reminder?
+register handlers

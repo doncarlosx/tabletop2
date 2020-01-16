@@ -1,7 +1,13 @@
 module.exports = (state, render) => {
-    const commands = {}
+    const EventEmitter = require('events')
+    const messages = require('src/messages/main')
+    const emitter = new EventEmitter()
+
+    require('./sync-players')(state, render, emitter)
 
     return function(message) {
-        console.info(message)
+        const data = messages.read(message.data)
+        const {command} = data
+        emitter.emit(command, data)
     }
 }
