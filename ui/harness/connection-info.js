@@ -1,5 +1,5 @@
 module.exports = (r, e) => {
-    const ConnectionInfo = require('components/connection-info')
+    const ConnectionInfo = require('ui/components/connection-info')
 
     r(
         e(ConnectionInfo),

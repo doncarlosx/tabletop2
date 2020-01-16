@@ -27,9 +27,11 @@ module.exports = {
     resolve: {
         modules: [
             'node_modules',
-            path.resolve(__dirname, '..'),
             path.resolve(__dirname, '../..'),
         ]
     },
     devtool: 'source-map',
+    devServer: {
+        port: 8082,
+    },
 }

@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
     entry: {
-        harness: path.resolve(__dirname, 'main.js'),
+        gamemasterUI: path.resolve(__dirname, 'main.js'),
     },
     output: {
         filename: '[name].dist.js',
@@ -32,6 +32,6 @@ module.exports = {
     },
     devtool: 'source-map',
     devServer: {
-        port: 8081,
+        port: 8083,
     },
 }

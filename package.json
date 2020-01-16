@@ -2,7 +2,8 @@
   "name": "tabletop2",
   "scripts": {
     "harness": "webpack-dev-server --config ui/harness/webpack.config.js",
-    "playerUI": "webpack-dev-server --config ui/player/webpack.config.js"
+    "playerUI": "webpack-dev-server --config ui/player/webpack.config.js",
+    "gamemasterUI": "webpack-dev-server --config ui/gamemaster/webpack.config.js"
   },
   "devDependencies": {
     "css-loader": "^3.4.2",

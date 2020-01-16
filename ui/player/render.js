@@ -8,7 +8,7 @@ module.exports = state => {
     assert(content)
 
     // Components
-    const ConnectionInfo = require('components/connection-info')
+    const ConnectionInfo = require('ui/components/connection-info')
 
     return function() {
         const app = e('div', null,

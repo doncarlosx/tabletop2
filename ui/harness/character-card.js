@@ -1,5 +1,5 @@
 module.exports = (r, e) => {
-    const CharacterCard = require('components/character-card')
+    const CharacterCard = require('ui/components/character-card')
     const selectCharacter = name => console.info(`selected character ${name}`)
 
     r(

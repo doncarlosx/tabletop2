@@ -1,5 +1,5 @@
 module.exports = (r, e) => {
-    const PlayerInfo = require('components/player-info')
+    const PlayerInfo = require('ui/components/player-info')
 
     r(
         e(PlayerInfo),

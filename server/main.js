@@ -7,7 +7,7 @@ const messageHandler = require('./message-handler/main')(state)
 const messages = require('../src/messages/main')
 
 const server = new WebSocket.Server({
-    port: 8081,
+    port: 8080,
 })
 
 server.on('listening', () => console.info('Websocket server listening...'))

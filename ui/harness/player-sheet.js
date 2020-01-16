@@ -1,5 +1,5 @@
 module.exports = (r, e) => {
-    const PlayerSheet = require('components/player-sheet')
+    const PlayerSheet = require('ui/components/player-sheet')
 
     r(
         e(PlayerSheet, {
