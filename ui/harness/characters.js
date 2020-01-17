@@ -61,7 +61,87 @@ module.exports = [
             Acrobatics: {
                 total: 2,
             },
-        }
+            Appraise: {
+                total: 2,
+            },
+            Bluff: {
+                total: 2,
+            },
+            Climb: {
+                total: 2,
+            },
+            Diplomacy: {
+                total: 2,
+            },
+            Disguise: {
+                total: 2,
+            },
+            'Escape Artist': {
+                total: 2,
+            },
+            Fly: {
+                total: 2,
+            },
+            Heal: {
+                total: 2,
+            },
+            Intimidate: {
+                total: 2,
+            },
+            Perception: {
+                total: 2,
+            },
+            Ride: {
+                total: 2,
+            },
+            'Sense Motive': {
+                total: 2,
+            },
+            Stealth: {
+                total: 2,
+            },
+            Survival: {
+                total: 2,
+            },
+            Swim: {
+                total: 2,
+            },
+        },
+        weapons: {
+            'Unarmed Strike': {
+                'Main Hand': {
+                    toHit: [3],
+                    damage: '1d6+1',
+                },
+                'Flurry': {
+                    toHit: [2,2],
+                    damage: '1d6+1',
+                },
+            },
+            Longbow: {
+                'Both Hands': {
+                    toHit: [2],
+                    damage: '1d8',
+                },
+            },
+        },
+        resources: {
+            'Potion, Cure Light Wounds': {
+                charges: 2,
+            },
+            'Deflect Arrows': {
+                charges: 1,
+                maxCharges: 1,
+            },
+            'Stunning Fist': {
+                charges: 2,
+                maxCharges: 3,
+            },
+        },
+        abilities: [
+            'Elf Blood',
+            'Evasion',
+        ],
     },
     {
         characterName: 'Morgana',
@@ -125,6 +205,91 @@ module.exports = [
             bonus: 2,
             defense: 17,
         },
+        skills: {
+            Acrobatics: {
+                total: 2,
+            },
+            Appraise: {
+                total: 2,
+            },
+            Bluff: {
+                total: 2,
+            },
+            Climb: {
+                total: 2,
+            },
+            Diplomacy: {
+                total: 2,
+            },
+            Disguise: {
+                total: 2,
+            },
+            'Escape Artist': {
+                total: 2,
+            },
+            Fly: {
+                total: 2,
+            },
+            Heal: {
+                total: 2,
+            },
+            Intimidate: {
+                total: 2,
+            },
+            Perception: {
+                total: 2,
+            },
+            Ride: {
+                total: 2,
+            },
+            'Sense Motive': {
+                total: 2,
+            },
+            Stealth: {
+                total: 2,
+            },
+            Survival: {
+                total: 2,
+            },
+            Swim: {
+                total: 2,
+            },
+        },
+        weapons: {
+            'Unarmed Strike': {
+                'Main Hand': {
+                    toHit: [3],
+                    damage: '1d6+1',
+                },
+                'Flurry': {
+                    toHit: [2,2],
+                    damage: '1d6+1',
+                },
+            },
+            Longbow: {
+                'Both Hands': {
+                    toHit: [2],
+                    damage: '1d8',
+                },
+            },
+        },
+        resources: {
+            'Potion, Cure Light Wounds': {
+                charges: 2,
+            },
+            'Deflect Arrows': {
+                charges: 1,
+                maxCharges: 1,
+            },
+            'Stunning Fist': {
+                charges: 2,
+                maxCharges: 3,
+            },
+        },
+        abilities: [
+            'Elf Blood',
+            'Evasion',
+        ],
     },
     {
         characterName: 'Eidy',
@@ -178,6 +343,91 @@ module.exports = [
             bonus: 2,
             defense: 17,
         },
+        skills: {
+            Acrobatics: {
+                total: 2,
+            },
+            Appraise: {
+                total: 2,
+            },
+            Bluff: {
+                total: 2,
+            },
+            Climb: {
+                total: 2,
+            },
+            Diplomacy: {
+                total: 2,
+            },
+            Disguise: {
+                total: 2,
+            },
+            'Escape Artist': {
+                total: 2,
+            },
+            Fly: {
+                total: 2,
+            },
+            Heal: {
+                total: 2,
+            },
+            Intimidate: {
+                total: 2,
+            },
+            Perception: {
+                total: 2,
+            },
+            Ride: {
+                total: 2,
+            },
+            'Sense Motive': {
+                total: 2,
+            },
+            Stealth: {
+                total: 2,
+            },
+            Survival: {
+                total: 2,
+            },
+            Swim: {
+                total: 2,
+            },
+        },
+        weapons: {
+            'Unarmed Strike': {
+                'Main Hand': {
+                    toHit: [3],
+                    damage: '1d6+1',
+                },
+                'Flurry': {
+                    toHit: [2,2],
+                    damage: '1d6+1',
+                },
+            },
+            Longbow: {
+                'Both Hands': {
+                    toHit: [2],
+                    damage: '1d8',
+                },
+            },
+        },
+        resources: {
+            'Potion, Cure Light Wounds': {
+                charges: 2,
+            },
+            'Deflect Arrows': {
+                charges: 1,
+                maxCharges: 1,
+            },
+            'Stunning Fist': {
+                charges: 2,
+                maxCharges: 3,
+            },
+        },
+        abilities: [
+            'Elf Blood',
+            'Evasion',
+        ],
     },
     {
         characterName: 'Ravyn',
@@ -237,6 +487,91 @@ module.exports = [
             bonus: 2,
             defense: 17,
         },
+        skills: {
+            Acrobatics: {
+                total: 2,
+            },
+            Appraise: {
+                total: 2,
+            },
+            Bluff: {
+                total: 2,
+            },
+            Climb: {
+                total: 2,
+            },
+            Diplomacy: {
+                total: 2,
+            },
+            Disguise: {
+                total: 2,
+            },
+            'Escape Artist': {
+                total: 2,
+            },
+            Fly: {
+                total: 2,
+            },
+            Heal: {
+                total: 2,
+            },
+            Intimidate: {
+                total: 2,
+            },
+            Perception: {
+                total: 2,
+            },
+            Ride: {
+                total: 2,
+            },
+            'Sense Motive': {
+                total: 2,
+            },
+            Stealth: {
+                total: 2,
+            },
+            Survival: {
+                total: 2,
+            },
+            Swim: {
+                total: 2,
+            },
+        },
+        weapons: {
+            'Unarmed Strike': {
+                'Main Hand': {
+                    toHit: [3],
+                    damage: '1d6+1',
+                },
+                'Flurry': {
+                    toHit: [2,2],
+                    damage: '1d6+1',
+                },
+            },
+            Longbow: {
+                'Both Hands': {
+                    toHit: [2],
+                    damage: '1d8',
+                },
+            },
+        },
+        resources: {
+            'Potion, Cure Light Wounds': {
+                charges: 2,
+            },
+            'Deflect Arrows': {
+                charges: 1,
+                maxCharges: 1,
+            },
+            'Stunning Fist': {
+                charges: 2,
+                maxCharges: 3,
+            },
+        },
+        abilities: [
+            'Elf Blood',
+            'Evasion',
+        ],
     },
     {
         characterName: 'Nym',
@@ -296,6 +631,91 @@ module.exports = [
             bonus: 2,
             defense: 17,
         },
+        skills: {
+            Acrobatics: {
+                total: 2,
+            },
+            Appraise: {
+                total: 2,
+            },
+            Bluff: {
+                total: 2,
+            },
+            Climb: {
+                total: 2,
+            },
+            Diplomacy: {
+                total: 2,
+            },
+            Disguise: {
+                total: 2,
+            },
+            'Escape Artist': {
+                total: 2,
+            },
+            Fly: {
+                total: 2,
+            },
+            Heal: {
+                total: 2,
+            },
+            Intimidate: {
+                total: 2,
+            },
+            Perception: {
+                total: 2,
+            },
+            Ride: {
+                total: 2,
+            },
+            'Sense Motive': {
+                total: 2,
+            },
+            Stealth: {
+                total: 2,
+            },
+            Survival: {
+                total: 2,
+            },
+            Swim: {
+                total: 2,
+            },
+        },
+        weapons: {
+            'Unarmed Strike': {
+                'Main Hand': {
+                    toHit: [3],
+                    damage: '1d6+1',
+                },
+                'Flurry': {
+                    toHit: [2,2],
+                    damage: '1d6+1',
+                },
+            },
+            Longbow: {
+                'Both Hands': {
+                    toHit: [2],
+                    damage: '1d8',
+                },
+            },
+        },
+        resources: {
+            'Potion, Cure Light Wounds': {
+                charges: 2,
+            },
+            'Deflect Arrows': {
+                charges: 1,
+                maxCharges: 1,
+            },
+            'Stunning Fist': {
+                charges: 2,
+                maxCharges: 3,
+            },
+        },
+        abilities: [
+            'Elf Blood',
+            'Evasion',
+        ],
     },
     {
         characterName: 'Nightshade',
@@ -348,5 +768,58 @@ module.exports = [
             bonus: 2,
             defense: 17,
         },
+        skills: {
+            Acrobatics: {
+                total: 2,
+            },
+            Appraise: {
+                total: 2,
+            },
+            Bluff: {
+                total: 2,
+            },
+            Climb: {
+                total: 2,
+            },
+            Diplomacy: {
+                total: 2,
+            },
+            Disguise: {
+                total: 2,
+            },
+            'Escape Artist': {
+                total: 2,
+            },
+            Fly: {
+                total: 2,
+            },
+            Heal: {
+                total: 2,
+            },
+            Intimidate: {
+                total: 2,
+            },
+            Perception: {
+                total: 2,
+            },
+            Ride: {
+                total: 2,
+            },
+            'Sense Motive': {
+                total: 2,
+            },
+            Stealth: {
+                total: 2,
+            },
+            Survival: {
+                total: 2,
+            },
+            Swim: {
+                total: 2,
+            },
+        },
+        abilities: [
+            'Horse',
+        ],
     },
 ]

@@ -105,25 +105,9 @@ module.exports = class extends React.Component {
     }
 
     skills() {
-        const data = [
-            ['Acrobatics', '+9'],
-            ['Appraise', '+9'],
-            ['Bluff', '+9'],
-            ['Climb', '+9'],
-            ['Diplomacy', '+9'],
-            ['Disguise', '+9'],
-            ['Escape Artist', '+9'],
-            ['Fly', '+9'],
-            ['Heal', '+9'],
-            ['Intimidate', '+9'],
-            ['Knowledge (Religion)', '+9'],
-            ['Perception', '+9'],
-            ['Ride', '+9'],
-            ['Sense Motive', '+9'],
-            ['Stealth', '+9'],
-            ['Survival', '+9'],
-            ['Swim', '+9'],
-        ]
+        const {skills} = this.props
+        const skill = ([name, {total}]) => [name, this.withSign(total)]
+        const data = Object.entries(skills).map(skill)
         const results = []
         for (let i = 0; i < data.length; i += 6) {
             results.push(this.leftRightSection(data.slice(i, i + 6)))
@@ -132,40 +116,37 @@ module.exports = class extends React.Component {
     }
 
     weapons() {
-        const data = [
-            ['Main Hand', '+3 for 1d6+1'],
-            ['Flurry', '+2/+2 for 1d6+1'],
-        ]
-        return this.section(
-            this.header('Unarmed Strike'),
-            this.buildLeft(data),
-            this.buildRight(data),
-            this.header('Cestus'),
-            this.buildLeft(data),
-            this.buildRight(data),
-            this.header('Longbow'),
-            this.buildLeft(data),
-            this.buildRight(data),
-        )
+        const {weapons} = this.props
+        if (weapons) {
+            const weaponSection = (name, data) => [this.header(name), this.buildLeft(data), this.buildRight(data),]
+            const toHitString = toHit => toHit.map(this.withSign).join('/')
+            const mode = ([name, {toHit, damage}]) => [name, `${toHitString(toHit)} for ${damage}`]
+            const byModeName = ([firstName], [secondName]) => this.compareNames(firstName, secondName)
+            const weapon = ([name, modes]) => weaponSection(name, Object.entries(modes).sort(byModeName).map(mode))
+            const byWeaponName = ([firstName], [secondName]) => this.compareNames(firstName, secondName)
+            return this.section(...Object.entries(weapons).sort(byWeaponName).flatMap(weapon))
+        }
     }
 
     resources() {
-        const data = [
-            ['Potion, Cure Light Wounds', 2],
-            ['Deflect Arrows', 1],
-            ['Stunning Fist', 1],
-        ]
-        return this.leftRightSection(data)
+        const {resources} = this.props
+        if (resources) {
+            const chargeText = (charges, max) => max ? `${charges}/${max}` : charges
+            const resource = ([name, {charges, maxCharges}]) => [name, chargeText(charges, maxCharges)]
+            const byResourceName = ([firstName], [secondName]) => this.compareNames(firstName, secondName)
+            const data = Object.entries(resources).sort(byResourceName).map(resource)
+            return this.leftRightSection(data)
+        }
     }
 
     abilities() {
-        const data = [
-            ['Elf Blood'],
-            ['Evasion'],
-        ]
-        return this.section(
-            this.buildLeft(data),
-        )
+        const {abilities} = this.props
+        if (abilities) {
+            const data = abilities.map(name => [name, null])
+            return this.section(
+                this.buildLeft(data)
+            )
+        }
     }
 
     leftRightSection(data, header) {
@@ -232,5 +213,15 @@ module.exports = class extends React.Component {
 
     section(...children) {
         return e('div', {className: css.section}, ...children)
+    }
+
+    compareNames(first, second) {
+        if (first < second) {
+            return -1
+        } else if (second < first) {
+            return 1
+        } else {
+            return 0
+        }
     }
 }
