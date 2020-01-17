@@ -10,7 +10,9 @@ function r(...elements) {
     ReactDOM.render(e('div', null, ...elements), content)
 }
 
-require('./character-card')(r, e)
+// require('./character-card')(r, e)
 // require('./player-info')(r, e)
 // require('./player-sheet')(r, e)
 // require('./connection-info')(r, e)
+require('./gamemaster-screen')(r, e)
+// require('./player-sheet-horizontal')(r, e)

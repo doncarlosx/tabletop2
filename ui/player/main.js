@@ -1,5 +1,5 @@
 // Startup
-const state = require('./state/main')()
+const state = require('ui/state/main')()
 const render = require('./render')(state)
 const messageHandler = require('./message-handler/main')(state, render)
 

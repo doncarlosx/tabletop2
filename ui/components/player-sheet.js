@@ -7,8 +7,9 @@ const css = require('./player-sheet.css')
 
 module.exports = class extends React.Component {
     render() {
+        const {characterName} = this.props
         return e('div', null,
-            this.header('Character'),
+            this.header(characterName),
             this.columnOne(),
             this.columnTwo(),
             this.clear(),
@@ -28,18 +29,29 @@ module.exports = class extends React.Component {
     }
 
     race() {
-        return e('div', null, 'Race: Half-Elf')
+        const {race} = this.props
+        if (race) {
+            return e('div', null, 'Race: ', race)
+        } else {
+            return null
+        }
     }
 
     classes() {
-        const charClass = (name, level) => {
-            return e('div', {className: css.subList}, `${name} ${level}`)
+        const {classes} = this.props
+        if (classes) {
+            const charClass = (name, level) => {
+                return e('div', {className: css.subList}, `${name} ${level}`)
+            }
+            return e('div', null,
+                'Classes:',
+                ...classes.map(({name, level}) => {
+                    return charClass(name, level)
+                }),
+            )
+        } else {
+            return null
         }
-        return e('div', null,
-            'Classes:',
-            charClass('Monk', 3),
-            charClass('Barbarian', 1),
-        )
     }
 
     hp() {
@@ -127,10 +139,9 @@ module.exports = class extends React.Component {
 
     columnOne() {
         return this.leftColumn(
-            this.characterName(),
             this.race(),
-            this.classes(),
             this.size(),
+            this.classes(),
             this.spacer(),
             this.armorClass(),
             this.spacer(),
