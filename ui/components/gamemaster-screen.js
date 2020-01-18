@@ -2,49 +2,45 @@ const assert = require('assert').strict
 
 const e = React.createElement
 
+const Modal = require('ui/components/modal')
 const PlayerSheet = require('ui/components/player-sheet-horizontal')
 const SaveData = require('ui/components/save-data')
-const Modal = require('ui/components/modal')
+const EditHP = require('ui/components/edit-hp')
 
 const css = require('./gamemaster-screen.css')
 
 module.exports = class extends React.Component {
     constructor(props) {
-        const {
-            doSave,
-            editHP,
-        } = props
-
-        assert(doSave)
-        assert(editHP)
-
         super(props)
         this.state = {
             state: 'ready',
+            editChar: undefined,
         }
     }
 
     render() {
-        const {state} = this.state
-        const onBackground = () => this.handleOnBackground()
+        const {
+            characters,
+            doSave,
+            editHP,
+        } = this.props
+        assert(characters)
+        assert(doSave)
+        assert(editHP)
 
-        const onClick = () => {
-            const {editChar} = this.state
-            const {editHP} = this.props
-            editHP(editChar, 2)
-            this.setState({
-                state: 'ready',
-                editChar: undefined,
-            })
-        }
+        const {state} = this.state
 
         return e('div', null,
             this.saveData(),
             this.addActor(),
             ...this.playerSheets(),
-            e(Modal, {onBackground, visible: state === 'addingActor'}, this.newActor()),
-            e(Modal, {onBackground, visible: state === 'editHP'}, e('button', {onClick}, 'edit')),
+            state === 'addingActor' ? this.addingActorModal() : null,
+            state === 'editHP' ? this.editHPModal() : null,
         )
+    }
+
+    addingActorModal() {
+        return this.modal(this.newActor())
     }
 
     newActor() {
@@ -53,9 +49,36 @@ module.exports = class extends React.Component {
         )
     }
 
+    editHPModal() {
+        const {editHP} = this.props
+        const {editChar} = this.state
+        assert(editChar)
+        const onSave = (hp, nl) => {
+            editHP(editChar, hp, nl)
+            this.setState({
+                state: 'ready',
+                editChar: undefined,
+            })
+        }
+        const props = {
+            onSave,
+            character: editChar
+        }
+        return this.modal(e(EditHP, props))
+    }
+
+    modal(...children) {
+        const props = {
+            onBackground: () => this.handleOnBackground(),
+            visible: true
+        }
+        return e(Modal, props, ...children)
+    }
+
     handleOnBackground() {
         this.setState({
             state: 'ready',
+            editChar: undefined,
         })
     }
 

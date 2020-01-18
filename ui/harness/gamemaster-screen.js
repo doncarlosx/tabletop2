@@ -4,14 +4,14 @@ module.exports = (r, e) => {
     const GamemasterScreen = require('ui/components/gamemaster-screen')
     const characters = require('./characters')
 
-    const doSave = name => ({})
+    function doSave(name) {
+        console.info(`Save all the data to ${name}`)
+        return {} // return no error
+    }
 
-    function editHP(char, hp) {
-        const {characterName} = char
-        assert(characterName)
-        const toEdit = characters.find(c => c.characterName === char.characterName)
-        assert(toEdit)
-        toEdit.hp.current = hp
+    function editHP(char, hp, nl) {
+        char.hp.current = hp
+        char.hp.nonLethal = nl
         render()
     }
 

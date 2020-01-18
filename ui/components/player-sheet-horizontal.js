@@ -212,7 +212,11 @@ module.exports = class extends React.Component {
         const {editable} = this.props
         if (editable) {
             return values.map(function ([label, _, onClick]) {
-                return e('span', {className: css.editable, onClick}, label)
+                if (onClick) {
+                    return e('span', {className: css.editable, onClick}, label)
+                } else {
+                    return label
+                }
             })
         } else {
             return values.map(function ([label]) {
@@ -225,7 +229,11 @@ module.exports = class extends React.Component {
         const {editable} = this.props
         if (editable) {
             return values.map(function ([_, value, onClick]) {
-                return e('span', {className: css.editable, onClick}, value)
+                if (onClick) {
+                    return e('span', {className: css.editable, onClick}, value)
+                } else {
+                    return value
+                }
             })
         } else {
             return values.map(function ([_, value]) {

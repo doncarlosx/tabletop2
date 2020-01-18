@@ -89,8 +89,8 @@ module.exports = class extends React.Component {
 
     message() {
         const {characterName} = this.props.character
-        let {current, nonLethal} = this.props.character.hp
-        let {setHPto, setHPtoError, setNLto, setNLtoError} = this.state
+        const {current, nonLethal} = this.props.character.hp
+        const {setHPto, setHPtoError, setNLto, setNLtoError} = this.state
 
         let message
         let error
@@ -114,6 +114,7 @@ module.exports = class extends React.Component {
 
     save() {
         const {onSave} = this.props
+        const {current, nonLethal} = this.props.character.hp
         const {setHPto, setHPtoError, setNLto, setNLtoError} = this.state
 
         function isEnabled() {
@@ -126,7 +127,7 @@ module.exports = class extends React.Component {
         const props = {
             className: css.saveButton,
             disabled: !isEnabled() ? 'disabled' : null,
-            onClick: () => onSave(setHPto, setNLto)
+            onClick: () => onSave(setHPto === '' ? current : setHPto, setNLto === '' ? nonLethal : setNLto)
         }
 
         return e('button', props, 'Save')
