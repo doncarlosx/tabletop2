@@ -10,6 +10,7 @@ module.exports = [
         hp: {
             current: 10,
             max: 14,
+            nonLethal: 0,
         },
         classes: [
             {
@@ -157,6 +158,7 @@ module.exports = [
         hp: {
             current: 14,
             max: 14,
+            nonLethal: 0,
         },
         classes: [
             {
@@ -305,6 +307,7 @@ module.exports = [
         hp: {
             current: 14,
             max: 14,
+            nonLethal: 0,
         },
         attributes: {
             STR: {
@@ -443,6 +446,7 @@ module.exports = [
         hp: {
             current: 14,
             max: 14,
+            nonLethal: 0,
         },
         classes: [
             {
@@ -587,6 +591,7 @@ module.exports = [
         hp: {
             current: 14,
             max: 14,
+            nonLethal: 0,
         },
         classes: [
             {
@@ -730,6 +735,7 @@ module.exports = [
         hp: {
             current: 14,
             max: 14,
+            nonLethal: 0,
         },
         attributes: {
             STR: {
