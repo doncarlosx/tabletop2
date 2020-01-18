@@ -106,6 +106,9 @@ module.exports = [
             Swim: {
                 total: 2,
             },
+            'Knowledge (Religion)': {
+                total: 2,
+            },
         },
         weapons: {
             'Unarmed Strike': {

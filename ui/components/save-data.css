@@ -1,0 +1,13 @@
+.container {
+}
+
+.lastSaved {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.lastError {
+    display: inline-block;
+    margin-left: 10px;
+    color: red;
+}

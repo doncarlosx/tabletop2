@@ -6,8 +6,40 @@ assert(e)
 const css = require('./player-sheet-horizontal.css')
 
 module.exports = class extends React.Component {
+    constructor(props) {
+        const {editable, editHP} = props
+
+        if (editable) {
+            assert(editHP)
+        }
+
+        const {
+            characterName,
+            attributes,
+            saves,
+            armorClass,
+            combatManeuvers,
+            baseAttack,
+            initiative,
+            speed,
+            skills,
+        } = props.character
+
+        assert(characterName.trim())
+        assert(attributes)
+        assert(saves)
+        assert(armorClass)
+        assert(combatManeuvers)
+        assert(baseAttack)
+        assert(initiative)
+        assert(speed)
+        assert(skills)
+
+        super(props)
+    }
+
     render() {
-        const {characterName} = this.props
+        const {characterName} = this.props.character
         return e('div', {className: css.container},
             this.header(characterName),
             this.charinfo(),
@@ -27,12 +59,12 @@ module.exports = class extends React.Component {
 
     charinfo() {
         let data = []
-        const {classes, race, size, alignment, hp} = this.props
+        const {editHP} = this.props
+        const {classes, race, size, alignment, hp} = this.props.character
 
-        if (classes) {
-            const classToTuple = ({name, level}) => [name, level]
-            const sortClasses = ([_a, a], [_b, b]) => b - a
-            data = data.concat(classes.map(classToTuple).sort(sortClasses))
+        if (hp) {
+            const {current, max} = hp
+            data.push(['HP', `${current}/${max}`, editHP])
         }
 
         if (race) {
@@ -47,23 +79,24 @@ module.exports = class extends React.Component {
             data.push(['Alignment', alignment])
         }
 
-        if (hp) {
-            const {current, max} = hp
-            data.push(['HP', `${current}/${max}`])
+        if (classes) {
+            const classToTuple = ({name, level}) => [name, level]
+            const sortClasses = ([_a, a], [_b, b]) => b - a
+            data = data.concat(classes.map(classToTuple).sort(sortClasses))
         }
 
         return this.leftRightSection(data)
     }
 
     attributes() {
-        const {attributes} = this.props
+        const {attributes} = this.props.character
         const attribute = ([name, {base, bonus}]) => [name, `${base} (${this.withSign(bonus)})`]
         const data = Object.entries(attributes).map(attribute)
         return this.leftRightSection(data)
     }
 
     saves() {
-        const {saves, armorClass} = this.props
+        const {saves, armorClass} = this.props.character
         let data = []
 
         const {Fortitude, Reflex, Will} = saves
@@ -84,7 +117,7 @@ module.exports = class extends React.Component {
     }
 
     combat() {
-        const {combatManeuvers, baseAttack, initiative, speed} = this.props
+        const {combatManeuvers, baseAttack, initiative, speed} = this.props.character
         let data = []
 
         {
@@ -105,7 +138,7 @@ module.exports = class extends React.Component {
     }
 
     skills() {
-        const {skills} = this.props
+        const {skills} = this.props.character
         const skill = ([name, {total}]) => [name, this.withSign(total)]
         const data = Object.entries(skills).map(skill)
         const results = []
@@ -116,7 +149,7 @@ module.exports = class extends React.Component {
     }
 
     weapons() {
-        const {weapons} = this.props
+        const {weapons} = this.props.character
         if (weapons) {
             const weaponSection = (name, data) => [this.header(name), this.buildLeft(data), this.buildRight(data),]
             const toHitString = toHit => toHit.map(this.withSign).join('/')
@@ -129,7 +162,7 @@ module.exports = class extends React.Component {
     }
 
     resources() {
-        const {resources} = this.props
+        const {resources} = this.props.character
         if (resources) {
             const chargeText = (charges, max) => max ? `${charges}/${max}` : charges
             const resource = ([name, {charges, maxCharges}]) => [name, chargeText(charges, maxCharges)]
@@ -140,7 +173,7 @@ module.exports = class extends React.Component {
     }
 
     abilities() {
-        const {abilities} = this.props
+        const {abilities} = this.props.character
         if (abilities) {
             const data = abilities.map(name => [name, null])
             return this.section(
@@ -177,24 +210,28 @@ module.exports = class extends React.Component {
 
     extractLabels(values) {
         const {editable} = this.props
-        return values.map(function ([label]) {
-            if (editable) {
-                return e('span', {className: css.editable}, label)
-            } else {
+        if (editable) {
+            return values.map(function ([label, _, onClick]) {
+                return e('span', {className: css.editable, onClick}, label)
+            })
+        } else {
+            return values.map(function ([label]) {
                 return label
-            }
-        })
+            })
+        }
     }
 
     extractValues(values) {
         const {editable} = this.props
-        return values.map(function ([_, value]) {
-            if (editable) {
-                return e('span', {className: css.editable}, value)
-            } else {
+        if (editable) {
+            return values.map(function ([_, value, onClick]) {
+                return e('span', {className: css.editable, onClick}, value)
+            })
+        } else {
+            return values.map(function ([_, value]) {
                 return value
-            }
-        })
+            })
+        }
     }
 
     addBreaks(values) {
