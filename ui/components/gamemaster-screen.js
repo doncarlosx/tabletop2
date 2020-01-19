@@ -6,6 +6,7 @@ const Modal = require('ui/components/modal')
 const PlayerSheet = require('ui/components/player-sheet-horizontal')
 const SaveData = require('ui/components/save-data')
 const EditHP = require('ui/components/edit-hp')
+const EditAttributes = require('ui/components/edit-attributes')
 
 const css = require('./gamemaster-screen.css')
 
@@ -14,7 +15,7 @@ module.exports = class extends React.Component {
         super(props)
         this.state = {
             state: 'ready',
-            editChar: undefined,
+            editCharacter: undefined,
         }
     }
 
@@ -36,6 +37,7 @@ module.exports = class extends React.Component {
             ...this.playerSheets(),
             state === 'addingActor' ? this.addingActorModal() : null,
             state === 'editHP' ? this.editHPModal() : null,
+            state === 'editAttributes' ? this.editAttributesModal() : null,
         )
     }
 
@@ -51,20 +53,28 @@ module.exports = class extends React.Component {
 
     editHPModal() {
         const {editHP} = this.props
-        const {editChar} = this.state
-        assert(editChar)
+        const {editCharacter} = this.state
+        assert(editCharacter)
         const onSave = (hp, nl) => {
-            editHP(editChar, hp, nl)
+            editHP(editCharacter, hp, nl)
             this.setState({
                 state: 'ready',
-                editChar: undefined,
+                editCharacter: undefined,
             })
         }
         const props = {
             onSave,
-            character: editChar
+            character: editCharacter
         }
         return this.modal(e(EditHP, props))
+    }
+
+    editAttributesModal() {
+        const {editAttributes} = this.props
+        const editCharacter = this.state
+        assert(editCharacter)
+        const props = {}
+        return this.modal(e(EditAttributes, props))
     }
 
     modal(...children) {
@@ -78,7 +88,7 @@ module.exports = class extends React.Component {
     handleOnBackground() {
         this.setState({
             state: 'ready',
-            editChar: undefined,
+            editCharacter: undefined,
         })
     }
 
@@ -109,14 +119,22 @@ module.exports = class extends React.Component {
                 editable: true,
                 character,
                 editHP: () => this.handleEditHP(character),
+                editAttributes: () => this.handleEditAttributes(character),
             })
         })
     }
 
-    handleEditHP(char) {
+    handleEditHP(character) {
         this.setState({
             state: 'editHP',
-            editChar: char,
+            editCharacter: character,
+        })
+    }
+
+    handleEditAttributes(character) {
+        this.setState({
+            state: 'editAttributes',
+            editCharacter: character,
         })
     }
 

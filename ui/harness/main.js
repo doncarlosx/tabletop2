@@ -18,4 +18,5 @@ function r(...elements) {
 // require('./save-data')(r, e)
 // require('./modal')(r, e)
 // require('./edit-hp')(r, e)
-require('./gamemaster-screen')(r, e)
+require('./edit-attributes')(r, e)
+// require('./gamemaster-screen')(r, e)

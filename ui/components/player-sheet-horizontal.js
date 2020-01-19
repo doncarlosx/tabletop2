@@ -3,14 +3,20 @@ const assert = require('assert').strict
 const e = React.createElement
 assert(e)
 
+const withSign = require('src/with-sign')
 const css = require('./player-sheet-horizontal.css')
 
 module.exports = class extends React.Component {
-    constructor(props) {
-        const {editable, editHP} = props
+    render() {
+        const {
+            editable,
+            editHP,
+            editAttributes,
+        } = this.props
 
         if (editable) {
             assert(editHP)
+            assert(editAttributes)
         }
 
         const {
@@ -23,7 +29,7 @@ module.exports = class extends React.Component {
             initiative,
             speed,
             skills,
-        } = props.character
+        } = this.props.character
 
         assert(characterName.trim())
         assert(attributes)
@@ -35,11 +41,6 @@ module.exports = class extends React.Component {
         assert(speed)
         assert(skills)
 
-        super(props)
-    }
-
-    render() {
-        const {characterName} = this.props.character
         return e('div', {className: css.container},
             this.header(characterName),
             this.charinfo(),
@@ -89,8 +90,10 @@ module.exports = class extends React.Component {
     }
 
     attributes() {
+        const {editAttributes} = this.props
         const {attributes} = this.props.character
-        const attribute = ([name, {base, bonus}]) => [name, `${base} (${this.withSign(bonus)})`]
+        const onClick = () => console.info('attr')
+        const attribute = ([name, {base, bonus}]) => [name, `${base} (${withSign(bonus)})`, editAttributes]
         const data = Object.entries(attributes).map(attribute)
         return this.leftRightSection(data)
     }
@@ -101,9 +104,9 @@ module.exports = class extends React.Component {
 
         const {Fortitude, Reflex, Will} = saves
         data = data.concat([
-            ['Fortitude', this.withSign(Fortitude)],
-            ['Reflex', this.withSign(Reflex)],
-            ['Will', this.withSign(Will)],
+            ['Fortitude', withSign(Fortitude)],
+            ['Reflex', withSign(Reflex)],
+            ['Will', withSign(Will)],
         ])
 
         const {current, touch, flatFooted} = armorClass
@@ -123,14 +126,14 @@ module.exports = class extends React.Component {
         {
             const {bonus, defense} = combatManeuvers
             data = data.concat([
-                ['CM Bonus', this.withSign(bonus)],
+                ['CM Bonus', withSign(bonus)],
                 ['CM Defense', defense],
             ])
         }
 
         data = data.concat([
-            ['Base Attack', this.withSign(baseAttack)],
-            ['Initiative', this.withSign(initiative)],
+            ['Base Attack', withSign(baseAttack)],
+            ['Initiative', withSign(initiative)],
             ['Speed', speed],
         ])
 
@@ -139,7 +142,7 @@ module.exports = class extends React.Component {
 
     skills() {
         const {skills} = this.props.character
-        const skill = ([name, {total}]) => [name, this.withSign(total)]
+        const skill = ([name, {total}]) => [name, withSign(total)]
         const data = Object.entries(skills).map(skill)
         const results = []
         for (let i = 0; i < data.length; i += 6) {
@@ -152,7 +155,7 @@ module.exports = class extends React.Component {
         const {weapons} = this.props.character
         if (weapons) {
             const weaponSection = (name, data) => [this.header(name), this.buildLeft(data), this.buildRight(data),]
-            const toHitString = toHit => toHit.map(this.withSign).join('/')
+            const toHitString = toHit => toHit.map(withSign).join('/')
             const mode = ([name, {toHit, damage}]) => [name, `${toHitString(toHit)} for ${damage}`]
             const byModeName = ([firstName], [secondName]) => this.compareNames(firstName, secondName)
             const weapon = ([name, modes]) => weaponSection(name, Object.entries(modes).sort(byModeName).map(mode))
@@ -246,14 +249,6 @@ module.exports = class extends React.Component {
         return values.flatMap(function (value) {
             return [value, e('br')]
         })
-    }
-
-    withSign(v) {
-        if (v > -1) {
-            return `+${v}`
-        } else {
-            return `${v}`
-        }
     }
 
     section(...children) {
