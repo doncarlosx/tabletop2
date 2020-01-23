@@ -22,12 +22,14 @@ module.exports = class extends React.Component {
     render() {
         const {
             characters,
-            doSave,
+            saveData,
             editHP,
+            saveAttributes,
         } = this.props
         assert(characters)
-        assert(doSave)
+        assert(saveData)
         assert(editHP)
+        assert(saveAttributes)
 
         const {state} = this.state
 
@@ -70,10 +72,19 @@ module.exports = class extends React.Component {
     }
 
     editAttributesModal() {
-        const {editAttributes} = this.props
-        const editCharacter = this.state
+        const {saveAttributes} = this.props
+        const {editCharacter} = this.state
         assert(editCharacter)
-        const props = {}
+
+        const onSave = updates => {
+            saveAttributes(editCharacter, updates)
+            this.setState({
+                state: 'ready',
+                editCharacter: undefined,
+            })
+        }
+
+        const props = {attributes: editCharacter.attributes, onSave}
         return this.modal(e(EditAttributes, props))
     }
 
@@ -97,8 +108,8 @@ module.exports = class extends React.Component {
     }
 
     saveData() {
-        const {doSave} = this.props
-        return this.section(e(SaveData, {doSave}))
+        const {saveData} = this.props
+        return this.section(e(SaveData, {doSave: saveData}))
     }
 
     handleAddActor() {

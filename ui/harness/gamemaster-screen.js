@@ -4,7 +4,7 @@ module.exports = (r, e) => {
     const GamemasterScreen = require('ui/components/gamemaster-screen')
     const characters = require('./characters')
 
-    function doSave(name) {
+    function saveData(name) {
         console.info(`Save all the data to ${name}`)
         return {} // return no error
     }
@@ -15,9 +15,21 @@ module.exports = (r, e) => {
         render()
     }
 
+    function saveAttributes(char, updates) {
+        const update = ({name, value}) => {
+            char.attributes[name].base = value
+        }
+        updates.map(update)
+    }
+
     function render() {
         r(
-            e(GamemasterScreen, {characters, doSave, editHP}),
+            e(GamemasterScreen, {
+                characters,
+                saveData,
+                editHP,
+                saveAttributes,
+            }),
         )
     }
 
