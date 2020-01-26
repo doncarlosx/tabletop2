@@ -1,0 +1,23 @@
+.container {
+    text-align: center;
+}
+
+.greeting {
+    font-size: 2em;
+}
+
+.prompt {
+    font-size: 1.2em;
+}
+
+.input input {
+    font-size: 1.5em;
+    border: solid 1px;
+    margin: 10px;
+    text-align: center;
+}
+
+.controls button {
+    border: solid 1px;
+    padding: 5px 20px;
+}

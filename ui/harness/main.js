@@ -19,4 +19,6 @@ function r(...elements) {
 // require('./modal')(r, e)
 // require('./edit-hp')(r, e)
 // require('./edit-attributes')(r, e)
-require('./gamemaster-screen')(r, e)
+// require('./gamemaster-screen')(r, e)
+require('./phone/welcome')(r, e)
+// require('./phone/player-list-item')(r, e)

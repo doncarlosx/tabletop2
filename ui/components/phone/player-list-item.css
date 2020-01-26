@@ -1,0 +1,27 @@
+.portrait {
+    display: block;
+    float: right;
+    width: 100px;
+}
+
+.controls {
+    margin-top: 10px;
+}
+
+.controls button {
+    width: 30%;
+    padding: 5px;
+    border: solid 1px #aaa;
+}
+
+.clear {
+    clear: both;
+}
+
+.label {
+    color: #777;
+}
+
+.claimed {
+    background-color: #efe;
+}
