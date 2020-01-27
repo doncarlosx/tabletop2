@@ -3,7 +3,7 @@ module.exports = (state, render) => {
     const messages = require('src/messages/main')
     const emitter = new EventEmitter()
 
-    require('./sync-players')(state, render, emitter)
+    require('./sync')(state, render, emitter)
 
     return function(message) {
         const data = messages.read(message.data)

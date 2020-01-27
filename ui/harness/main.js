@@ -12,7 +12,6 @@ function r(...elements) {
 
 // require('./character-card')(r, e)
 // require('./player-info')(r, e)
-// require('./player-sheet')(r, e)
 // require('./player-sheet-horizontal')(r, e)
 // require('./connection-info')(r, e)
 // require('./save-data')(r, e)
@@ -20,5 +19,7 @@ function r(...elements) {
 // require('./edit-hp')(r, e)
 // require('./edit-attributes')(r, e)
 // require('./gamemaster-screen')(r, e)
-require('./phone/welcome')(r, e)
+
+// require('./phone/welcome')(r, e)
 // require('./phone/player-list-item')(r, e)
+// require('./player-sheet')(r, e)

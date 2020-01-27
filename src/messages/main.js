@@ -1,9 +1,5 @@
 const assert = require('assert').strict
 
-const names = {
-    SyncPlayers: 'SyncPlayers',
-}
-
 function read(message) {
     const data = JSON.parse(message)
     const {command} = data
@@ -14,20 +10,18 @@ function read(message) {
 function write(data) {
     const {command} = data
     assert(command)
-    const message = JSON.stringify(data)
-    return message
+    return JSON.stringify(data)
 }
 
-function writeSyncPlayers(players) {
-    return write({
-        players,
-        command: names.SyncPlayers,
-    })
+const Sync = require('./sync')(write)
+
+const commands = {
+    Sync: Sync.command,
 }
 
 module.exports = {
     read,
     write,
-    writeSyncPlayers,
-    names,
+    commands,
+    sync: Sync.write,
 }

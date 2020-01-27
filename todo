@@ -1,8 +1,103 @@
+client indicates it is their turn
+client shows initiative
+client shows that it is rerolling initiative between rounds
+gm shows current player
+gm sorts by initiative
+client prompts rolls
+	who initiates the prompt?
+	does it have to be your turn to do this if player initiates?
+client allows entering the result of rolls
+client sends result of roll back to gm
+gm shows result of client roll
+	forever?
+	the last roll?
+gm can easily add lethal damage to a player
+gm can easily add nonlethal damage to a player
+gm can easily add custom conditions to a player
+	this means a name and the effect it has
+	for example plus one to attack rolls
 
-message comes into handler
-read string
-parse json
-get command
-emit event
 
-register handlers
+i'm the gm
+i want ross to roll a reflex save
+i click reflex save on morgana
+the modal has a button that says "prompt roll"
+	i need a reflex save modal
+	the reflex save modal doesn't actually allow you to change the reflex roll
+	because the value for the reflex roll bonus comes from other components
+	the reflex roll bonus is entirely derived
+	one of those components might be an arbitrary condition
+	so the modal so far just has a button that says prompt roll
+	maybe it also has the previous rolls?
+	does the modal stay up while waiting for the roll result?
+	that actually makes sense
+	it could have a place to put the value to roll against
+	you wouldn't send this to the client, but you could flash their client red or green
+i click the button to "prompt roll"
+	the button is disabled if nobody has morgana open as their active character
+	how does that work with ross, eidy, and morgana
+	this implies a message may come into the server saying ross has opened morgana
+	which changes the state of the server
+	which causes the ui to re-render
+	which enables the button
+if so, it tells that client to prompt a reflex roll of 1d20 plus their reflex bonus
+	if ross closes morgana while this message is in flight
+	the client could force ross to open morgana
+		but then why does it choose ross instead of someone else
+			because ross is the client that the message was sent to
+			the server could track who _last_ opened a character
+			this seems crappy and implicit
+			there should be a button on the character list that says claim
+			and clients should have a place to put their name with a debounce that broadcasts it to everyone
+the client opens a modal over whatever screen ross' client is on
+	the modal says "Do a reflex save!"
+	it describes what to roll
+	it has an input box to type the result
+	it has a button that says roll for me that math.random
+	it has a button to submit
+	the input makes sure the entered value is an integer
+	upon submission the client waits for the response from the server against the checked value
+	and changes color based on miss or hit
+
+when ross clicks submit
+the gm players screen
+	has an integrated log that shows the roll result?
+	shows the roll on the player sheet somehow?
+	opens a modal with the role result?
+		i don't like opening modals from something other than user actions
+	
+attacker
+	dc 13 stunning fist
+defender
+	rolls fortitude + 1, must beat 13
+
+2-21
+wins on 14-21
+14 15 16 17 18 19 20 21
+1  2  3  4  5  6  7  8
+8 * 5 = 40% success for defender
+60% success for attacker
+
+defender
+	fortitude 11
+attacker
+	rolls d20+3, must beat 11
+
+4-23
+winds on 12-23
+12 * 5 = 60% success for attacker
+40% success for defender
+
+opposed d20 rolls can be swapped
+
+roll attack roll d20 + bonus to hit
+try to beat static AC
+
+1d20+3 trying to beat 14
+4 - 23
+
+
+d20 + n to beat threshold
+	we can swap who defines the threshold with who rolls
+d20 + n to beat d20 + n
+	is someone always setting the threshold here?

@@ -2,6 +2,8 @@ module.exports = () => {
     const assert = require('assert').strict
 
     let sockets = []
+    let players = []
+    let characters = []
 
     function addSocket(socket) {
         sockets.push(socket)
@@ -13,8 +15,22 @@ module.exports = () => {
         sockets.splice(i, 1)
     }
 
+    function sync() {
+        return {
+            characters,
+            players,
+        }
+    }
+
+    function load(data) {
+        players = data.players || []
+        characters = data.characters || []
+    }
+
     return {
         addSocket,
         removeSocket,
+        sync,
+        load,
     }
 }
