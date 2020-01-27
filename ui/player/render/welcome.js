@@ -1,18 +1,45 @@
-module.exports = (state, render) => {
+module.exports = (state, render, messages) => {
+    const assert = require('assert').strict
+
     const e = React.createElement
+    assert(e)
+
     const Welcome = require('ui/components/phone/welcome')
+
     const storage = window.localStorage
+    assert(storage)
+
     const key = 'ui/player/render/welcome.js-lastName'
     const initialName = storage.getItem(key) || ''
+
+    let waitingForServer = false
+    let error = undefined
+
     const submitPlayerName = name => {
-        storage.setItem(key, name)
-        state.screen = 'Loading'
-        state.playerName = name
-        render()
-        state.initialSyncFinished.then(() => {
-            state.screen = 'PlayerList'
-            render()
+        waitingForServer = true
+        redraw()
+        const {socket:{send}} = state
+        const {SetPlayerName:{command, write}} = messages
+        send(write(name))
+        const {waitFor:{waitFor}} = state
+        waitFor(command).then(({data}) => {
+            if (data === true) {
+                const {renderScreen} = render
+                renderScreen('Loading')
+            } else {
+                waitingForServer = false
+                error = `A player called ${name} is already connected`
+                redraw()
+            }
         })
     }
-    return e(Welcome, {submitPlayerName, initialName})
+
+    const redraw = () => {
+        const {renderComponent} = render
+        renderComponent(component())
+    }
+
+    const component = () => e(Welcome, {submitPlayerName, initialName, waitingForServer, error})
+
+    return component()
 }

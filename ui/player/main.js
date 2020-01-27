@@ -1,26 +1,13 @@
-// Startup
 const state = require('ui/state/main')()
-const render = require('./render/main')(state)
-const messageHandler = require('./message-handler/main')(state, render)
+const messages = require('src/messages/main')
+const render = require('./render/main')(state, messages)
+const messageHandler = require('./message-handler/main')(state, render, messages)
 
-render()
-
-state.addWebSocket(newWebSocket())
-
-const {socket} = state
-
-socket.addEventListener('open', () => {
-    state.setConnected();
-    render()
-})
-
-socket.addEventListener('close', () => {
-    state.setDisconnected()
-    render()
-})
-
-socket.addEventListener('message', messageHandler)
-
+const {socket: {setSocket, onMessage}} = state
+setSocket(newWebSocket())
+onMessage(messageHandler)
+const {renderScreen} = render
+renderScreen('Welcome')
 
 // Functions
 function newWebSocket() {

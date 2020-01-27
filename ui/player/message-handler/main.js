@@ -1,10 +1,8 @@
-module.exports = (state, render) => {
+module.exports = (state, render, messages) => {
     const EventEmitter = require('events')
-    const messages = require('src/messages/main')
     const emitter = new EventEmitter()
-
-    require('./sync')(state, render, emitter)
-
+    const {waitFor:{setEmitter}} = state
+    setEmitter(emitter)
     return function(message) {
         const data = messages.read(message.data)
         const {command} = data

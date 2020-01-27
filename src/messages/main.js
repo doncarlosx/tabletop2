@@ -1,27 +1,23 @@
 const assert = require('assert').strict
 
-function read(message) {
+const read = message => {
     const data = JSON.parse(message)
     const {command} = data
     assert(command)
     return data
 }
 
-function write(data) {
+const write = data => {
     const {command} = data
     assert(command)
     return JSON.stringify(data)
 }
 
-const Sync = require('./sync')(write)
-
-const commands = {
-    Sync: Sync.command,
-}
+const makeCommand = command => ({command, write: data => write({command, data}),})
 
 module.exports = {
     read,
     write,
-    commands,
-    sync: Sync.write,
+    Sync: makeCommand('Sync'),
+    SetPlayerName: makeCommand('SetPlayerName'),
 }
