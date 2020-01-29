@@ -1,12 +1,15 @@
+const component = require('src/component/main')()
+const system = require('src/system/main')(component)
 const state = require('ui/state/main')()
 const messages = require('src/messages/main')
-const render = require('./render/main')(state, messages)
-const messageHandler = require('./message-handler/main')(state, render, messages)
+const render = require('./render/main')(state, messages, system)
+const messageHandler = require('./message-handler/main')(state, render, messages, component)
 
-const {socket: {setSocket, onMessage}} = state
+const {setSocket, onConnect, onDisconnect, onMessage} = state.socket
 setSocket(newWebSocket())
-onMessage(messageHandler)
 const {renderScreen} = render
+onDisconnect(() => renderScreen('Disconnected'))
+onMessage(messageHandler)
 renderScreen('Welcome')
 
 // Functions

@@ -3,6 +3,9 @@ module.exports = () => {
     const getPlayerByName = name => {
         return state.players.find(player => player.name === name)
     }
+    const getPlayerBySocket = socket => {
+        return state.players.find(player => player.socket === socket)
+    }
     const addPlayer = (name, socket) => {
         assert(getPlayerByName(name) === undefined)
         state.players.push({name, socket})
@@ -19,6 +22,7 @@ module.exports = () => {
     const state = {
         players: [],
         getPlayerByName,
+        getPlayerBySocket,
         addPlayer,
         removePlayerBySocket,
     }

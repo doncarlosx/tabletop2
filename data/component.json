@@ -1,0 +1,15 @@
+{
+  "name": {
+    "byEntity": {
+      "1": "Topher"
+    },
+    "byName": {
+      "Topher": "1"
+    }
+  },
+  "isCharacter": {
+    "byEntity": {
+      "1": true
+    }
+  }
+}

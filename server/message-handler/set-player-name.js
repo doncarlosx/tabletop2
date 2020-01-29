@@ -1,6 +1,6 @@
 module.exports = (state, messages, emitter) => {
-    const {SetPlayerName:{command, write}} = messages
-    const {players:{getPlayerByName, addPlayer}} = state
+    const {command, write} = messages.SetPlayerName
+    const {getPlayerByName, addPlayer} = state.players
     emitter.on(command, (socket, {data}) => {
         const player = getPlayerByName(data)
         if (player === undefined) {

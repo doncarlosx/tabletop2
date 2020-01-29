@@ -18,6 +18,7 @@ const makeCommand = command => ({command, write: data => write({command, data}),
 module.exports = {
     read,
     write,
-    Sync: makeCommand('Sync'),
+    ClaimCharacter: makeCommand('ClaimCharacter'),
     SetPlayerName: makeCommand('SetPlayerName'),
+    Sync: makeCommand('Sync'),
 }

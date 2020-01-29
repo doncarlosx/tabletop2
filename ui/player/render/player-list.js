@@ -1,19 +1,24 @@
-module.exports = (state, render) => {
+module.exports = (state, render, messages, system) => {
     const e = React.createElement
     const PlayerListItem = require('ui/components/phone/player-list-item')
 
-    const characters = state.getCharacters()
-
+    const characters = system.character.listAll()
     if (characters.length === 0) {
         return 'There are no characters. Your GM is bad and should feel bad.'
     }
 
-    const listItems = state.getCharacters().map(character => {
+    const {send} = state.socket
+    const {write} = messages.ClaimCharacter
+    const doClaim = ({name}) => {
+        send(write(name))
+    }
+
+    const listItems = characters.map(character => {
         const props = {
-            claimed: false,
-            characterName: 'Topher',
-            playerName: '',
-            doClaim: () => console.info('do claim'),
+            claimed: character.claimedBy !== undefined,
+            characterName: character.name,
+            playerName: character.claimedBy || '',
+            doClaim: () => doClaim(character),
             doUnclaim: () => console.info('do unclaim'),
             doView: () => console.info('do view'),
         }

@@ -18,10 +18,10 @@ module.exports = (state, render, messages) => {
     const submitPlayerName = name => {
         waitingForServer = true
         redraw()
-        const {socket:{send}} = state
-        const {SetPlayerName:{command, write}} = messages
+        const {send} = state.socket
+        const {command, write} = messages.SetPlayerName
         send(write(name))
-        const {waitFor:{waitFor}} = state
+        const {waitFor} = state.waitFor
         waitFor(command).then(({data}) => {
             if (data === true) {
                 const {renderScreen} = render
