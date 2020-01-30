@@ -26,7 +26,7 @@ module.exports = (state, render, messages, system) => {
                 claimed: character.claimedBy !== undefined,
                 characterName: character.name,
                 playerName: character.claimedBy || '',
-                portraitSource: '/data/topher.png',
+                portraitSource: character.portraitSource,
                 doClaim: () => doClaim(character),
                 doUnclaim: () => console.info('do unclaim'),
                 doView: () => console.info('do view'),

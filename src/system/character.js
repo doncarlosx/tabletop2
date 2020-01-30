@@ -2,7 +2,8 @@ module.exports = (component) => {
     const {
         claimedByPlayer,
         name,
-        isCharacter
+        isCharacter,
+        portraitSource,
     } = component
     const Events = require('events')
     const emitter = new Events()
@@ -11,6 +12,7 @@ module.exports = (component) => {
             claimedBy: claimedByPlayer.get(e),
             entity: e,
             name: name.getName(e),
+            portraitSource: portraitSource.get(e),
         }
     }
     const finalize = () => {

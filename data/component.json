@@ -11,5 +11,10 @@
     "byEntity": {
       "1": true
     }
+  },
+  "portraitSource": {
+    "byEntity": {
+      "1": "/data/topher.png"
+    }
   }
 }
