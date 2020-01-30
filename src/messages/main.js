@@ -21,4 +21,5 @@ module.exports = {
     ClaimCharacter: makeCommand('ClaimCharacter'),
     SetPlayerName: makeCommand('SetPlayerName'),
     Sync: makeCommand('Sync'),
+    UnclaimCharacter: makeCommand('UnclaimCharacter'),
 }

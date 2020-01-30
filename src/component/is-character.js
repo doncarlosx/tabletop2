@@ -4,7 +4,7 @@ module.exports = () => {
     let entities
     return {
         load: data => {
-            data = data || {}
+            data = data.isCharacter = data.isCharacter || {}
             byEntity = data.byEntity || {}
             entities = Object.keys(byEntity)
             dirty = true

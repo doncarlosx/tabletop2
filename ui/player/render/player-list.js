@@ -3,9 +3,11 @@ module.exports = (state, render, messages, system) => {
     const PlayerListItem = require('ui/components/phone/player-list-item')
 
     const {send} = state.socket
-    const {write} = messages.ClaimCharacter
     const doClaim = ({name}) => {
-        send(write(name))
+        send(messages.ClaimCharacter.write(name))
+    }
+    const doUnclaim = ({name}) => {
+        send(messages.UnclaimCharacter.write(name))
     }
 
     const {character} = system
@@ -15,6 +17,7 @@ module.exports = (state, render, messages, system) => {
     }
     character.onChange(redraw)
 
+    const {playerName} = state
     const component = () => {
         const characters = character.listAll()
         if (characters.length === 0) {
@@ -23,12 +26,12 @@ module.exports = (state, render, messages, system) => {
 
         const listItems = characters.map(character => {
             const props = {
-                claimed: character.claimedBy !== undefined,
+                claimed: character.claimedBy === playerName.get(),
                 characterName: character.name,
                 playerName: character.claimedBy || '',
                 portraitSource: character.portraitSource,
                 doClaim: () => doClaim(character),
-                doUnclaim: () => console.info('do unclaim'),
+                doUnclaim: () => doUnclaim(character),
                 doView: () => console.info('do view'),
             }
             return e(PlayerListItem, props)

@@ -25,6 +25,7 @@ module.exports = (state, render, messages) => {
         waitFor(command).then(({data}) => {
             if (data === true) {
                 const {renderScreen} = render
+                state.playerName.set(name)
                 renderScreen('Loading')
             } else {
                 waitingForServer = false

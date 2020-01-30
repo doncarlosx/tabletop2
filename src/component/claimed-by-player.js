@@ -1,7 +1,7 @@
 module.exports = () => {
     let dirty = false
-    const claims = {}
-    const byPlayer = {}
+    let claims
+    let byPlayer
     return {
         claim: (e, p) => {
             if (claims[e] === undefined) {
@@ -26,6 +26,11 @@ module.exports = () => {
             dirty = true
         },
         get: e => claims[e],
+        load: data => {
+            data = data.claimedByPlayer = data.claimedByPlayer || {}
+            claims = data.claims = data.claims || {}
+            byPlayer = data.byPlayer = data.byPlayer || {}
+        },
         isDirty: () => dirty,
         finalize: () => dirty = false,
     }

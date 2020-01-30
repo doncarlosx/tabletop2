@@ -3,7 +3,7 @@ module.exports = () => {
     let byEntity
     return {
         load: data => {
-            data = data || {}
+            data = data.portraitSource = data.portraitSource || {}
             byEntity = data.byEntity || {}
             dirty = true
         },

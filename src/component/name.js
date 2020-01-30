@@ -4,7 +4,7 @@ module.exports = () => {
     let byName
     return {
         load: data => {
-            data = data || {}
+            data = data.name = data.name || {}
             byEntity = data.byEntity || {}
             byName = data.byName || {}
             dirty = true

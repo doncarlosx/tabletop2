@@ -1,8 +1,9 @@
 module.exports = () => {
     const load = data => {
-        component.isCharacter.load(data.isCharacter)
-        component.name.load(data.name)
-        component.portraitSource.load(data.portraitSource)
+        component.claimedByPlayer.load(data)
+        component.isCharacter.load(data)
+        component.name.load(data)
+        component.portraitSource.load(data)
     }
     const finalize = () => {
         component.claimedByPlayer.finalize()
