@@ -4,11 +4,22 @@ module.exports = (component) => {
         name,
         isCharacter
     } = component
+    const Events = require('events')
+    const emitter = new Events()
     const loadByEntity = e => {
         return {
             claimedBy: claimedByPlayer.get(e),
             entity: e,
             name: name.getName(e),
+        }
+    }
+    const finalize = () => {
+        if (
+            claimedByPlayer.isDirty() ||
+            name.isDirty() ||
+            isCharacter.isDirty()
+        ) {
+            emitter.emit('changed')
         }
     }
     const byEntity = e => {
@@ -24,6 +35,8 @@ module.exports = (component) => {
         return isCharacter.listEntities().map(e => loadByEntity(e))
     }
     return {
+        finalize,
+        onChange: f => emitter.on('changed', f),
         byEntity,
         byName,
         listAll,

@@ -3,7 +3,7 @@ const system = require('src/system/main')(component)
 const state = require('ui/state/main')()
 const messages = require('src/messages/main')
 const render = require('./render/main')(state, messages, system)
-const messageHandler = require('./message-handler/main')(state, render, messages, component)
+const messageHandler = require('./message-handler/main')(state, render, messages, component, system)
 
 const {setSocket, onConnect, onDisconnect, onMessage} = state.socket
 setSocket(newWebSocket())
