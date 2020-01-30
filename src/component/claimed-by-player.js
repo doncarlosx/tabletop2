@@ -30,6 +30,7 @@ module.exports = () => {
             data = data.claimedByPlayer = data.claimedByPlayer || {}
             claims = data.claims = data.claims || {}
             byPlayer = data.byPlayer = data.byPlayer || {}
+            dirty = true
         },
         isDirty: () => dirty,
         finalize: () => dirty = false,
