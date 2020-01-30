@@ -1,28 +1,21 @@
-// Startup
+const component = require('src/component/main')()
+const system = require('src/system/main')(component)
 const state = require('ui/state/main')()
-const render = require('./render')(state)
-const messageHandler = require('./message-handler/main')(state, render)
+const messages = require('src/messages/main')
 
-render()
+const screens = {
+    Disconnected: require('./screens/disconnected'),
+}
 
-state.addWebSocket(newWebSocket())
+const render = require('ui/render/main')(screens, state, messages, system)
+const messageHandler = require('./message-handler/main')(state, render, messages, component, system)
 
-state.getSocket().addEventListener('open', () => {
-    state.setConnected();
-    render()
-})
-
-state.getSocket().addEventListener('close', () => {
-    state.setDisconnected()
-    render()
-})
-
-state.getSocket().addEventListener('message', messageHandler)
-
-
-// Exports
-window.state = state
-
+const {setSocket, onConnect, onDisconnect, onMessage} = state.socket
+setSocket(newWebSocket())
+const {renderScreen} = render
+onDisconnect(() => renderScreen('Disconnected'))
+onMessage(messageHandler)
+renderScreen('Disconnected')
 
 // Functions
 function newWebSocket() {
