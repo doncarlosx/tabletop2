@@ -39,6 +39,7 @@ module.exports = (component) => {
     return {
         finalize,
         onChange: f => emitter.on('changed', f),
+        offChange: f => emitter.off('changed', f),
         byEntity,
         byName,
         listAll,

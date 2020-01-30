@@ -12,11 +12,15 @@ module.exports = (state, messages, system) => {
         Welcome: require('./welcome'),
     }
 
+    let unloadScreen
+
     const renderScreen = screen => {
         assert(screen)
         const screenFunction = Screens[screen]
         assert(screenFunction)
-        const component = screenFunction(state, render, messages, system)
+        const {component, unload} = screenFunction(state, render, messages, system)
+        if (unloadScreen !== undefined) unloadScreen()
+        unloadScreen = unload
         renderComponent(component)
     }
 

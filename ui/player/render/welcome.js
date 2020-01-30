@@ -42,5 +42,7 @@ module.exports = (state, render, messages) => {
 
     const component = () => e(Welcome, {submitPlayerName, initialName, waitingForServer, error})
 
-    return component()
+    return {
+        component: component(),
+    }
 }

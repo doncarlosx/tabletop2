@@ -39,5 +39,9 @@ module.exports = (state, render, messages, system) => {
 
         return e('div', null, ...listItems)
     }
-    return component()
+
+    return {
+        component: component(),
+        unload: () => character.offChange(redraw),
+    }
 }
