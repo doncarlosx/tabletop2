@@ -1,5 +1,5 @@
 module.exports = (r, e) => {
-    const PlayerListItem = require('ui/components/phone/player-list-item')
+    const PlayerListItem = require('ui/components/player/player-list-item')
 
     const data = [
         {

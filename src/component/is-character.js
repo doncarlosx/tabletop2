@@ -3,12 +3,6 @@ module.exports = () => {
     let byEntity
     let entities
     return {
-        load: data => {
-            data = data.isCharacter = data.isCharacter || {}
-            byEntity = data.byEntity || {}
-            entities = Object.keys(byEntity)
-            dirty = true
-        },
         byEntity: e => byEntity[e] || false,
         add: e => {
             byEntity[e] = true
@@ -19,6 +13,11 @@ module.exports = () => {
             dirty = true
         },
         listEntities: () => entities,
+        load: data => {
+            byEntity = data.byEntity = data.byEntity || {}
+            entities = Object.keys(byEntity)
+            dirty = true
+        },
         isDirty: () => dirty,
         finalize: () => dirty = false,
     }

@@ -5,6 +5,8 @@ const messages = require('src/messages/main')
 
 const screens = {
     Disconnected: require('./screens/disconnected'),
+    Loading: require('./screens/loading'),
+    Main: require('./screens/main'),
 }
 
 const render = require('ui/render/main')(screens, state, messages, system)
@@ -15,7 +17,7 @@ setSocket(newWebSocket())
 const {renderScreen} = render
 onDisconnect(() => renderScreen('Disconnected'))
 onMessage(messageHandler)
-renderScreen('Disconnected')
+renderScreen('Loading')
 
 // Functions
 function newWebSocket() {

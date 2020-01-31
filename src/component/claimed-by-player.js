@@ -1,11 +1,11 @@
 module.exports = () => {
     let dirty = false
-    let claims
-    let byPlayer
+    let byEntity
+    let byPlayer = {}
     return {
         claim: (e, p) => {
-            if (claims[e] === undefined) {
-                claims[e] = p
+            if (byEntity[e] === undefined) {
+                byEntity[e] = p
                 byPlayer[p] = e
                 dirty = true
                 return true
@@ -14,22 +14,21 @@ module.exports = () => {
             }
         },
         unclaim: e => {
-            const p = claims[e]
-            delete claims[e]
+            const p = byEntity[e]
+            delete byEntity[e]
             delete byPlayer[p]
             dirty = true
         },
         unclaimByPlayer: p => {
             const e = byPlayer[p]
-            delete claims[e]
+            delete byEntity[e]
             delete byPlayer[p]
             dirty = true
         },
-        get: e => claims[e],
+        get: e => byEntity[e],
         load: data => {
-            data = data.claimedByPlayer = data.claimedByPlayer || {}
-            claims = data.claims = data.claims || {}
-            byPlayer = data.byPlayer = data.byPlayer || {}
+            byEntity = data.byEntity = data.byEntity || {}
+            Object.entries(byEntity).map(([e, p]) => byPlayer[p] = e)
             dirty = true
         },
         isDirty: () => dirty,

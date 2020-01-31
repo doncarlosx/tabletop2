@@ -1,6 +1,6 @@
 module.exports = (state, render, messages, system) => {
     const e = React.createElement
-    const PlayerListItem = require('ui/components/phone/player-list-item')
+    const PlayerListItem = require('ui/components/player/player-list-item')
 
     const {send} = state.socket
     const doClaim = ({name}) => {

@@ -4,7 +4,7 @@ module.exports = (state, render, messages) => {
     const e = React.createElement
     assert(e)
 
-    const Welcome = require('ui/components/phone/welcome')
+    const Welcome = require('ui/components/player/welcome')
 
     const storage = window.localStorage
     assert(storage)

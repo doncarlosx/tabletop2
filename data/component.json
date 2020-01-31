@@ -2,9 +2,6 @@
   "name": {
     "byEntity": {
       "1": "Topher"
-    },
-    "byName": {
-      "Topher": "1"
     }
   },
   "isCharacter": {
@@ -15,6 +12,16 @@
   "portraitSource": {
     "byEntity": {
       "1": "/data/topher.png"
+    }
+  },
+  "race": {
+    "byEntity": {
+      "1": "Half-Elf"
+    }
+  },
+  "size": {
+    "byEntity": {
+      "1": "Medium"
     }
   }
 }

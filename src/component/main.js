@@ -1,23 +1,20 @@
 module.exports = () => {
     const load = data => {
-        component.claimedByPlayer.load(data)
-        component.isCharacter.load(data)
-        component.name.load(data)
-        component.portraitSource.load(data)
+        Object.entries(components).map(([key, component]) => {
+            data[key] = data[key] || {}
+            component.load(data[key])
+        })
     }
     const finalize = () => {
-        component.claimedByPlayer.finalize()
-        component.isCharacter.finalize()
-        component.name.finalize()
-        component.portraitSource.finalize()
+        Object.values(components).forEach(component => component.finalize())
     }
-    const component = {
-        load,
-        finalize,
+    const components = {
         claimedByPlayer: require('./claimed-by-player')(),
         isCharacter: require('./is-character')(),
         name: require('./name')(),
         portraitSource: require('./portrait-source')(),
+        race: require('./race')(),
+        size: require('./size')(),
     }
-    return component
+    return Object.assign({}, components, {load, finalize})
 }
