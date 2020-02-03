@@ -1,11 +1,16 @@
 module.exports = component => {
     const finalize = () => {
-        system.character.finalize()
-        component.finalize()
+        while(true) {
+            const updatedComponents = Object.values(system).flatMap(system => system.finalize())
+            component.finalize()
+            if (updatedComponents.length === 0) break
+            updatedComponents.forEach(component => component.isDirty(true))
+        }
     }
     const system = {
-        finalize,
         character: require('./character')(component),
+        hitDice: require('./hit-dice')(component),
+        hitPoints: require('./hit-points')(component),
     }
-    return system
+    return Object.assign({}, system, {finalize})
 }

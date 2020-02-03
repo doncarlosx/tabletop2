@@ -23,5 +23,43 @@
     "byEntity": {
       "1": "Medium"
     }
+  },
+  "classes": {
+    "byEntity": {
+      "1": [
+        {
+          "name": "Monk",
+          "hitDie": {
+            "roll": 8
+          }
+        },
+        {
+          "name": "Monk",
+          "hitDie": {
+            "roll": 1
+          }
+        },
+        {
+          "name": "Monk",
+          "hitDie": {
+            "roll": 4
+          }
+        },
+        {
+          "name": "Monk",
+          "hitDie": {
+            "roll": 7
+          }
+        }
+      ]
+    }
+  },
+  "favoredClass": {
+    "byEntity": {
+      "1": [
+        "Monk",
+        "Bard"
+      ]
+    }
   }
 }

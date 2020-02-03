@@ -2,6 +2,7 @@ module.exports = (component) => {
     const {
         claimedByPlayer,
         name,
+        hitPoints,
         isCharacter,
         portraitSource,
         race,
@@ -11,6 +12,7 @@ module.exports = (component) => {
     const components = [
         claimedByPlayer,
         name,
+        hitPoints,
         isCharacter,
         portraitSource,
         race,
@@ -24,6 +26,7 @@ module.exports = (component) => {
         return {
             claimedBy: claimedByPlayer.get(e),
             entity: e,
+            hitPoints: hitPoints.get(e),
             name: name.getName(e),
             portraitSource: portraitSource.get(e),
             race: race.get(e),
@@ -32,9 +35,12 @@ module.exports = (component) => {
     }
 
     const finalize = () => {
-        if (components.reduce((a, b) => a || b)) {
+        const reduceFn = (a, b) => a || b.isDirty()
+        const needsToFinalize = components.reduce(reduceFn, false)
+        if (needsToFinalize) {
             emitter.emit('changed')
         }
+        return []
     }
 
     const byEntity = e => {

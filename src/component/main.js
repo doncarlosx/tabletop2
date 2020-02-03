@@ -10,6 +10,10 @@ module.exports = () => {
     }
     const components = {
         claimedByPlayer: require('./claimed-by-player')(),
+        classes: require('./classes')(),
+        favoredClass: require('./favored-class')(),
+        hitDice: require('./hit-dice')(),
+        hitPoints: require('./hit-points')(),
         isCharacter: require('./is-character')(),
         name: require('./name')(),
         portraitSource: require('./portrait-source')(),

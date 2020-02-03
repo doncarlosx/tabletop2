@@ -24,8 +24,10 @@ module.exports = class extends React.Component {
         const {
             race,
             size,
+            hitPoints,
         } = this.props.character
         const data = [
+            ['HP: ', this.hitPointsValue(hitPoints)],
             ['Race: ', race],
             ['Size: ', size],
         ]
@@ -46,6 +48,23 @@ module.exports = class extends React.Component {
 
     value(v) {
         return e('span', {className:css.value}, v || '—')
+    }
+
+    hitPointsValue(hp) {
+        if (hp === undefined) {
+            return undefined
+        }
+        let {current, max} = hp
+        if (current === undefined && max === undefined) {
+            return undefined
+        }
+        if (current === undefined) {
+            current = '-'
+        }
+        if (max === undefined) {
+            max = '-'
+        }
+        return `${current}/${max}`
     }
 
     break() {

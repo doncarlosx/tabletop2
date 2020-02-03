@@ -31,7 +31,7 @@ module.exports = () => {
             Object.entries(byEntity).map(([e, p]) => byPlayer[p] = e)
             dirty = true
         },
-        isDirty: () => dirty,
+        isDirty: (set) => set ? dirty = true : dirty,
         finalize: () => dirty = false,
     }
 }

@@ -3,15 +3,19 @@ module.exports = () => {
     let byEntity
     return {
         get: e => byEntity[e],
-        set: (e,v) => {
-            byEntity[e] = v
+        set: (e, hp) => {
+            byEntity[e] = hp
+            dirty = true
+        },
+        delete: e => {
+            delete byEntity[e]
             dirty = true
         },
         load: data => {
             byEntity = data.byEntity = data.byEntity || {}
             dirty = true
         },
-        isDirty: (set) => set ? dirty = true : dirty,
+        isDirty: set => set ? dirty = true : dirty,
         finalize: () => dirty = false,
     }
 }

@@ -18,7 +18,7 @@ module.exports = () => {
             entities = Object.keys(byEntity)
             dirty = true
         },
-        isDirty: () => dirty,
+        isDirty: (set) => set ? dirty = true : dirty,
         finalize: () => dirty = false,
     }
 }

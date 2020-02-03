@@ -2,6 +2,7 @@ const assert = require('assert').strict
 
 const srcSystemData = require('./read-data-files')()
 const {component, entity, system, messages} = require('./load-src-systems')(srcSystemData)
+system.finalize()
 const state = require('./state/main')()
 const messageHandler = require('./message-handler/main')(state, messages, component, system)
 
