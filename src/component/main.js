@@ -11,6 +11,7 @@ module.exports = () => {
     const components = {
         claimedByPlayer: require('./claimed-by-player')(),
         classes: require('./classes')(),
+        constitution: require('./constitution')(),
         favoredClass: require('./favored-class')(),
         hitDice: require('./hit-dice')(),
         hitPoints: require('./hit-points')(),

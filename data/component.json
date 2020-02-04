@@ -61,5 +61,12 @@
         "Bard"
       ]
     }
+  },
+  "constitution": {
+    "byEntity": {
+      "1": {
+        "base": 9
+      }
+    }
   }
 }

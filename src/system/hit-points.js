@@ -1,6 +1,7 @@
 module.exports = component => {
     const {
         classes,
+        constitution,
         favoredClass,
         hitDice,
         hitPoints,
@@ -8,8 +9,14 @@ module.exports = component => {
     const processEntity = entity => {
         const hp = {current: 0, max: 0}
 
+        let conBonusHds = 0
         const hds = hitDice.get(entity)
-        if (hds) hds.forEach(({roll}) => hp.max += roll || 0)
+        if (hds) hds.forEach(({roll}) => {
+            hp.max += roll || 0
+            if (roll > 1) {
+                conBonusHds += 1
+            }
+        })
 
         const favoredClasses = favoredClass.get(entity)
         const clss = classes.get(entity)
@@ -19,6 +26,12 @@ module.exports = component => {
                     hp.max += 1
                 }
             })
+        }
+
+        const con = constitution.get(entity)
+        if (con) {
+            const {bonus} = con
+            hp.max += conBonusHds * bonus
         }
 
         hp.current = hp.max
@@ -37,7 +50,7 @@ module.exports = component => {
                 }
             })
         }
-        fromComponents(classes, favoredClass, hitDice)
+        fromComponents(classes, constitution, favoredClass, hitDice)
         const updated = Array.from(entities).map(processEntity).reduce((a, b) => a || b, false)
         return updated ? [hitPoints] : []
     }
