@@ -1,23 +1,23 @@
-module.exports = (state, render, messages, system) => {
+module.exports = ({ state, render, system }) => {
     const e = React.createElement
     const PlayerListItem = require('ui/components/player/player-list-item')
 
-    const {send} = state.socket
-    const doClaim = ({name}) => {
+    const { send } = state.socket
+    const doClaim = ({ name }) => {
         send(messages.ClaimCharacter.write(name))
     }
-    const doUnclaim = ({name}) => {
+    const doUnclaim = ({ name }) => {
         send(messages.UnclaimCharacter.write(name))
     }
 
-    const {character} = system
-    const {renderComponent} = render
+    const { character } = system
+    const { renderComponent } = render
     const redraw = () => {
         renderComponent(component())
     }
     character.onChange(redraw)
 
-    const {playerName} = state
+    const { playerName } = state
     const component = () => {
         const characters = character.listAll()
         if (characters.length === 0) {

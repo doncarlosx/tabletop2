@@ -1,14 +1,8 @@
-module.exports = (state, render, messages) => {
+module.exports = ({ send, renderScreen, renderComponent }) => {
     const assert = require('assert').strict
-
-    const e = React.createElement
-    assert(e)
-
-    const Welcome = require('ui/components/player/welcome')
 
     const storage = window.localStorage
     assert(storage)
-
     const key = 'ui/player/render/welcome.js-lastName'
     const initialName = storage.getItem(key) || ''
 
@@ -16,31 +10,32 @@ module.exports = (state, render, messages) => {
     let error = undefined
 
     const submitPlayerName = name => {
+        storage.setItem(key, name)
         waitingForServer = true
         redraw()
-        const {send} = state.socket
-        const {command, write} = messages.SetPlayerName
-        send(write(name))
-        const {waitFor} = state.waitFor
-        waitFor(command).then(({data}) => {
-            if (data === true) {
-                const {renderScreen} = render
-                state.playerName.set(name)
-                renderScreen('Loading')
-            } else {
-                waitingForServer = false
-                error = `A player called ${name} is already connected`
-                redraw()
-            }
-        })
+
+        const resolve = () => {
+            renderScreen('Loading')
+        }
+
+        const reject = () => {
+            error = `There is already a player connected with the name ${name}`
+            waitingForServer = false
+            redraw()
+        }
+
+        send({ command: 'SetPlayerName', name }).then(resolve, reject)
     }
 
-    const redraw = () => {
-        const {renderComponent} = render
-        renderComponent(component())
-    }
+    const Welcome = require('ui/components/player/welcome')
+    const component = () => React.createElement(Welcome, {
+        submitPlayerName,
+        initialName,
+        waitingForServer,
+        error
+    })
 
-    const component = () => e(Welcome, {submitPlayerName, initialName, waitingForServer, error})
+    const redraw = () => renderComponent(component())
 
     return {
         component: component(),

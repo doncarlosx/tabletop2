@@ -1,28 +1,51 @@
 const assert = require('assert').strict
 
-const srcSystemData = require('./read-data-files')()
-const {component, entity, system, messages} = require('./load-src-systems')(srcSystemData)
-system.finalize()
-const state = require('./state/main')()
-const messageHandler = require('./message-handler/main')(state, messages, component, system)
+const database = require('./read-data-files')()
+
+const component = require('../src/component/main')()
+component.load(database.componentData)
+
+const entity = require('../src/entity/main')()
+entity.load(database.entityData)
+
+const system = require('../src/system/main')(component)
+const finalize = () => system.finalize()
+finalize()
+
+const sockets = []
+const players = []
+
+const handler = require('./message-handler/main')({component, sockets, players, finalize})
+
+let clientID = 1
 
 const addNewSocket = socket => {
     console.info(`Adding new socket=${JSON.stringify(socket)}`)
-    state.socket.addSocket(socket)
+    sockets.push(socket)
     socket.on('close', (code, reason) => removeClosedSocket(socket, code, reason))
-    socket.on('message', messageHandler)
-    const {write} = messages.Sync
-    socket.send(write(srcSystemData))
+    socket.on('message', handler)
+    socket.send(JSON.stringify({command:'Sync', database, clientID: clientID++}))
 }
 
-const {claimedByPlayer} = component
 const removeClosedSocket = (socket, code, reason) => {
     console.info(`Removing closed socket code=${code} reason=${reason}`)
-    state.socket.removeSocket(socket)
-    const player = state.players.removePlayerBySocket(socket)
-    if (player) {
-        claimedByPlayer.unclaimByPlayer(player.name)
-        console.info(`Removed player for socket player=${player.name}`)
+    assert(removeSocket(socket))
+    const disconnectedPlayer = players.find(player => player.socket === socket)
+    if (disconnectedPlayer) {
+        console.info(players)
+        const {name} = disconnectedPlayer
+        console.info(`Removing player ${name} because their socket was closed`)
+        players.splice(players.findIndex(player => player.name === disconnectedPlayer.name), 1)
+    }
+}
+
+const removeSocket = socket => {
+    const index = sockets.indexOf(socket)
+    if (index === -1) {
+        return false
+    } else {
+        sockets.splice(index, 1)
+        return true
     }
 }
 

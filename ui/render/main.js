@@ -1,7 +1,6 @@
-module.exports = (screens, state, messages, system) => {
+module.exports = ({ send, screens }) => {
     const assert = require('assert').strict
-    const e = React.createElement
-    assert(e)
+
     const content = document.getElementById('content')
     assert(content)
 
@@ -11,7 +10,7 @@ module.exports = (screens, state, messages, system) => {
         assert(screen)
         const screenFunction = screens[screen]
         assert(screenFunction)
-        const {component, unload} = screenFunction(state, render, messages, system)
+        const { component, unload } = screenFunction({ send, renderScreen, renderComponent })
         if (unloadScreen !== undefined) unloadScreen()
         unloadScreen = unload
         renderComponent(component)

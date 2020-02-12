@@ -4,7 +4,8 @@
     "harness": "webpack-dev-server --config ui/harness/webpack.config.js",
     "playerUI": "webpack-dev-server --config ui/player/webpack.config.js",
     "gamemasterUI": "webpack-dev-server --config ui/gamemaster/webpack.config.js",
-    "server": "nodemon -w ../src -w . --cwd server main.js"
+    "server": "nodemon -w ../src -w . --cwd server main.js",
+    "system-dot": "nodemon -e dot -x dot -Tsvg -O system.dot"
   },
   "devDependencies": {
     "css-loader": "^3.4.2",

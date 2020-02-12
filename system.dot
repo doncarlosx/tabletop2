@@ -1,0 +1,32 @@
+digraph {
+    graph [rankdir=LR]
+    node [shape=box]
+
+    n0 [label="server"]
+    n1 [label="message handler"]
+    n2 [label="update component data"]
+    n3 [label="trigger component cascade"]
+
+    n1 -> n0
+    n2 -> n1
+    n3 -> n1
+
+    pl1 [label="player UI"]
+    pl2 [label="message handler"]
+    pl3 [label="accept component sync"]
+    pl4 [label="send message to server"]
+
+    pl2 -> pl1
+    pl3 -> pl2
+    pl4 -> pl1
+
+    gm1 [label="gamemaster UI"]
+    gm2 [label="message handler"]
+    gm3 [label="accept component sync"]
+    gm4 [label="send message to server"]
+
+    gm2 -> gm1
+    gm3 -> gm2
+    gm4 -> gm1
+
+}
