@@ -1,37 +1,56 @@
+// This component knows whether an entity has been claimed by a player.
+
 module.exports = () => {
-    let dirty = false
+    let d
     let byEntity
-    let byPlayer = {}
+
+    const attach = ({dirty, data}) => {
+        d = dirty
+        byEntity = data.byEntity = data.byEntity || {}
+        Object.keys(byEntity).forEach(d)
+    }
+
+    const getPlayerName = entity => byEntity[entity]
+
+    const claimAsPlayer = (entity, playerName) => {
+        // Only one player can claim an entity at a time.
+        const existing = byEntity[entity]
+        if (existing) {
+            throw `Entity ${entity} is already claimed by ${existing}.`
+        }
+
+        // Nobody else has claimed this entity yet.
+        byEntity[entity] = playerName
+        d(entity)
+    }
+
+    const unclaimAsPlayer = (entity, playerName) => {
+        // You can't unclaim a character unless you currently have them claimed.
+        const current = byEntity[entity]
+        if (current === playerName) {
+            delete byEntity[entity]
+            d(entity)
+        }
+    }
+
+    const unclaimAllAsPlayer = playerName => {
+        // The player may have claimed between 0 and many entities.
+        const entities = Object.entries(byEntity)
+            .filter(([_, claimant]) => claimant === playerName)
+            .map(([entity, _]) => entity)
+
+        // Unclaim all of them.
+        entities.forEach(entity => {
+            delete byEntity[entity]
+            d(entity)
+        })
+    }
+
     return {
-        claim: (e, p) => {
-            if (byEntity[e] === undefined) {
-                byEntity[e] = p
-                byPlayer[p] = e
-                dirty = true
-                return true
-            } else {
-                return false
-            }
-        },
-        unclaim: e => {
-            const p = byEntity[e]
-            delete byEntity[e]
-            delete byPlayer[p]
-            dirty = true
-        },
-        unclaimByPlayer: p => {
-            const e = byPlayer[p]
-            delete byEntity[e]
-            delete byPlayer[p]
-            dirty = true
-        },
-        get: e => byEntity[e],
-        load: data => {
-            byEntity = data.byEntity = data.byEntity || {}
-            Object.entries(byEntity).map(([e, p]) => byPlayer[p] = e)
-            dirty = true
-        },
-        isDirty: (set) => set ? dirty = true : dirty,
-        finalize: () => dirty = false,
+        attach,
+        getPlayerName,
+        claimAsPlayer,
+        unclaimAsPlayer,
+        unclaimAllAsPlayer,
     }
 }
