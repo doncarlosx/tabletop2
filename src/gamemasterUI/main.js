@@ -40,41 +40,29 @@ socket.addEventListener('message', ({data}) => {
     handler(data)
 
     // Just like the player UI, I'll tie a promise to waiting for the server reply.
-    if (data.clientID && data.clientID === clientID && data.messageID) {
-        const promise = promises[data.messageID]
-        if (promise) {
-            if (data.error) {
-                promise.reject(data)
-            } else {
-                promise.resolve(data)
-            }
-            // There is no way this messageID should ever be seen again.
-            delete promises[data.messageID]
-        }
-    }
+    reply(data)
 })
 
-// I need a place to remember my client ID.
-let clientID
+// Just like everything else, the gamemaster screen needs access to component data.
+const C = require('src/component/main')()
 
-// I need a place to hold promises waiting for server replies.
-let promises
+// And functions to talk to the server.
+let send, reply
+
+// And to customize the last step of the initial sync.
+const onSync = (sendReply) => {
+    send = sendReply.send
+    reply = sendReply.reply
+    r('butts')
+    // TODO: render the initial screen
+}
+
+const onUpdate = () => {
+    console.info('update')
+}
 
 // The gamemaster doesn't set a player name.
 const MessageHandlers = {
-    CallComponent,
-    InitialSync,
-}
-
-function CallComponent(data) {
-
-}
-
-// Just like everythign else, the gamemaster screen needs access to component data.
-const C = require('src/component/main')()
-
-function InitialSync(data) {
-    clientID = data.clientID
-    const database = data.database
-    C.attach(database.componentData)
+    CallComponent: require('src/sharedUI/call-component')({C, onUpdate}),
+    InitialSync: data => require('src/sharedUI/initial-sync')({data, socket, C, onSync}),
 }

@@ -78,85 +78,21 @@ socket.addEventListener('message', ({data}) => {
     try {
         handler(data)
     } catch (e) {
-        rError(`An error ocurred processing the ${command} command: ${e}`)
+        rError(`An error ocurred processing the ${command} command: ${e}. Something is very wrong.`)
         return
     }
 
-    // Finally, if the message has a signature on it, I'm going to check if it was from
-    // this client. If it was, I'll finish any promise that is waiting for this reply.
-    if (data.clientID && data.clientID === clientID && data.messageID) {
-        const promise = promises[data.messageID]
-        if (promise) {
-            if (data.error) {
-                promise.reject(data)
-            } else {
-                promise.resolve(data)
-            }
-            // There is no way this messageID should ever be seen again.
-            delete promises[data.messageID]
-        }
-    }
+    // Finally, the module to talk to the server needs to check if this is a reply
+    // to something I sent previously.
+    reply(data)
 })
 
-// I need to handle each distinct message from the server in its own way.
-const MessageHandlers = {
-    CallComponent,
-    InitialSync,
-    SetPlayerName,
-}
+// I need access to the component system so it can be initialized by the InitialSync
+// message and so screens can pull data from it.
+const C = require('src/component/main')()
 
-// The server is broadcasting a component change.
-function CallComponent(data) {
-    // If this failed on the server we should not apply it locally.
-    if (data.error) {
-        return
-    }
-
-    const {name, method, args} = data
-
-    // The message must have a name and method.
-    if (!name) {
-        rError(`The server sent a CallComponent message without a name property. Something is very wrong.`)
-        return
-    }
-
-    if (!method) {
-        rError('The server sent a CallComponent message without a method property. Something is very wrong.')
-        return
-    }
-
-    // The message must have args, but they may be empty.
-    if (args === undefined) {
-        rError('The server sent a CallComponent message without an args property. Something is very wrong.')
-        return
-    }
-
-    // The component must exist.
-    const component = C[name]
-    if (!component) {
-        rError(`The server sent a CallComponent message about the ${name} component, but it does not exist. Something is very wrong.`)
-        return
-    }
-
-    // The component must have the requested method.
-    const methodFunction = component[method]
-    if (!methodFunction) {
-        rError(`The server sent a CallComponent message about ${name}.${method}, but that is not defined. Something is very wrong.`)
-        return
-    }
-
-    // The method succeeded on the server, so it cannot fail.
-    try {
-        methodFunction(...args)
-    } catch (e) {
-        rError(`The server sent CallComponent ${name}.${method}(${args}) but it failed locally. Something is very wrong.`)
-        return
-    }
-
-    // The applied change may have derived changes.
-    C.finalize()
-
-    // If the current screen cares about changes, they need to know.
+// If a component update is applied the current screen should re-render.
+const onUpdate = () => {
     if (rerender) rerender()
 }
 
@@ -164,7 +100,7 @@ function CallComponent(data) {
 let thisPlayersName
 
 // This message is never broadcast, so I assume it is responding to me.
-function SetPlayerName({name, error}) {
+const SetPlayerName = ({name, error}) => {
     // Sometimes this reply is to tell me that the name was unavailable.
     if (error) {
         return
@@ -173,13 +109,6 @@ function SetPlayerName({name, error}) {
     // Otherwise I've chosen my player name.
     thisPlayersName = name
 }
-
-// I need access to the component system so it can be initialized by the InitialSync
-// message and so screens can pull data from it.
-const C = require('src/component/main')()
-
-// I need to remember the client ID from the initial sync for the entire life of the player UI.
-let clientID
 
 // I need a place to store the function that re-renders the current screen.
 let rerender
@@ -190,45 +119,22 @@ const nextScreen = () => {
     rerender = require('./player-list')({r, e, C, thisPlayersName, send})
 }
 
-function InitialSync(data) {
-    // I expect the message for this handler to have the following attributes.
-    // If there is an error I expect the generic error handling in the socket message handler to take care of it.
-    clientID = data.clientID
-    assert(clientID, 'The InitialSync message did not have a clientID attribute.')
-    const database = data.database
-    assert(database, 'The InitialSync message did not have a database attribute.')
+// I need a function to send messages to the server.
+let send
 
-    // Now that we have a client ID we can initialize the module that let's us talk to the server.
-    // {send, reply} = require('src/sharedUI/send')({clientID, socket})
+// I need a function to recognize messages from the server that are replies to me.
+let reply
 
-    // I expect the database to have component data, even if it is empty.
-    assert(database.componentData, 'The InitialSync database did not have componentData.')
-
-    // The synced component data initializes the component system.
-    C.attach(database.componentData)
-
-    // Now that the initial sync is complete I want to switch to the welcome screen.
+// I need to customize the last step of the initial sync from the server.
+const onSync = (sendReply) => {
+    send = sendReply.send
+    reply = sendReply.reply
     require('./welcome-screen')({r, e, send, nextScreen})
 }
 
-// I need a place to remember promises that are waiting for replies from the server.
-const promises = {}
-
-// I need to assign every message I send to the server a unique ID so that I can wait for a reply to it.
-let nextMessageID = 1
-
-// All the handlers need to be able to talk to the server.
-const send = data => {
-    // Every message I send to the server needs a unique fingerprint so I can recognize replies.
-    data.clientID = clientID
-    data.messageID = nextMessageID++
-
-    // I'll return a promise so the caller can chain callbacks to the server's reply.
-    return new Promise((resolve, reject) => {
-        // I need to remember this promise so I can resolve it when the server replies.
-        promises[data.messageID] = {resolve, reject}
-
-        // Finally, I need to actually send the message.
-        socket.send(JSON.stringify(data))
-    })
+// I need to handle each distinct message from the server in its own way.
+const MessageHandlers = {
+    CallComponent: require('src/sharedUI/call-component')({C, onUpdate}),
+    InitialSync: data => require('src/sharedUI/initial-sync')({data, socket, C, onSync}),
+    SetPlayerName,
 }

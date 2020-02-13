@@ -44,6 +44,9 @@ module.exports = ({clientID, socket}) => {
         } else {
             resolve(data)
         }
+
+        // Each promise can only be replied to once.
+        promises.delete(data.messageID)
     }
 
     return {
