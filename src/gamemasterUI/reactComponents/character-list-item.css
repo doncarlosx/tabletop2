@@ -1,0 +1,19 @@
+.characterName {
+    font-size: 1.2em;
+    padding-left: 20px;
+    background-color: #ddd;
+}
+
+.column th {
+    text-align: right;
+    font-weight: normal;
+    color: #777;
+}
+
+.column td {
+    font-weight: bold;
+}
+
+.clickable {
+    cursor: pointer;
+}

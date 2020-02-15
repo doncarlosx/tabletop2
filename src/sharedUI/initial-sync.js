@@ -20,6 +20,9 @@ module.exports = ({data, socket, C, onSync}) => {
     // The synced component data initializes the component system.
     C.attach(database.componentData)
 
+    // This shouldn't ever do anything, but it also shouldn't ever hurt.
+    C.finalize()
+
     // The calling client needs to save the send and reply functions and render the initial screen.
     onSync(sendReply)
 }

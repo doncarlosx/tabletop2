@@ -62,8 +62,6 @@ server.on('connection', socket => {
     // When a client disconnects we need to clean up after them.
     socket.on('close', (code, reason) => {
         // I don't want to include their socket in broadcasts anymore.
-        console.info(sockets.indexOf(socket))
-        console.info(playersBySocket)
         sockets.splice(sockets.indexOf(socket), 1)
 
         // If the socket had a player, we need to clean up the player.

@@ -31,25 +31,29 @@
           "name": "Monk",
           "hitDie": {
             "roll": 8
-          }
+          },
+          "favoredBonus": "hitpoint"
         },
         {
           "name": "Monk",
           "hitDie": {
             "roll": 1
-          }
+          },
+          "favoredBonus": "hitpoint"
         },
         {
           "name": "Monk",
           "hitDie": {
             "roll": 4
-          }
+          },
+          "favoredBonus": "hitpoint"
         },
         {
           "name": "Monk",
           "hitDie": {
             "roll": 7
-          }
+          },
+          "favoredBonus": "skillpoint"
         }
       ]
     }
@@ -65,7 +69,8 @@
   "constitution": {
     "byEntity": {
       "1": {
-        "base": 9
+        "base": 9,
+        "current": 9
       }
     }
   }

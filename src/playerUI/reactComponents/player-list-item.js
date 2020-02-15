@@ -3,6 +3,7 @@
 // viewing more details about them.
 
 const assert = require('assert').strict
+const hpString = require('src/functions/hp-string')
 
 const css = require('./player-list-item.css')
 
@@ -27,6 +28,7 @@ module.exports = ({e}) => class extends React.Component {
             this.portrait(),
             this.playerName(),
             this.characterName(),
+            this.hitPoints(),
             this.controls(),
             this.clear(),
         )
@@ -47,6 +49,10 @@ module.exports = ({e}) => class extends React.Component {
     characterName() {
         const {characterName} = this.props
         return e('div', null, this.label('Character Name: '), characterName)
+    }
+
+    hitPoints() {
+        return e('div', null, this.label('HP: '), hpString(this.props))
     }
 
     label(text) {

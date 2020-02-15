@@ -49,16 +49,18 @@ const C = require('src/component/main')()
 // And functions to talk to the server.
 let send, reply
 
+// I need a function to re-render the current screen if component data changes.
+let rerender
+
 // And to customize the last step of the initial sync.
 const onSync = (sendReply) => {
     send = sendReply.send
     reply = sendReply.reply
-    r('butts')
-    // TODO: render the initial screen
+    rerender = require('./character-list')({r, e, C, send})
 }
 
 const onUpdate = () => {
-    console.info('update')
+    rerender()
 }
 
 // The gamemaster doesn't set a player name.

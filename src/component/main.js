@@ -23,7 +23,29 @@ module.exports = () => {
     // when the caller is finished making changes to begin regenerating
     // derived data.
     const finalize = () => {
-        // TODO: implement this.
+        // Deriving data may require multiple rounds for second order or greater derivations.
+        while (true) {
+            // Systems may change components, which may cause new entities to be dirtied.
+            // Breaking up each round shouldn't change the final outcome, but may be more efficient.
+            const thisIteration = Object.entries(dirtyEntities)
+            dirtyEntities = {}
+
+            // There's nothing left to do.
+            if (thisIteration.length === 0) {
+                return
+            }
+
+            // Every system gets a chance to check for changes.
+            Object.entries(System).forEach(([_, system]) => {
+                // Dirty entities define the total scope of what may need to be derived.
+                thisIteration.forEach(([entity, components]) => {
+                    // But the entity has to be dirty in a component the system derives from for it to matter.
+                    if (system.derivesFrom(components)) {
+                        system.rebuild(entity)
+                    }
+                })
+            })
+        }
     }
 
     // We must keep track of which entities have changed for which components
@@ -32,10 +54,17 @@ module.exports = () => {
 
     const components = {
         claimedByPlayer: require('./claimed-by-player')(),
+        classes: require('./classes')(),
+        constitution: require('./constitution')(),
+        hitdice: require('./hitdice')(),
+        hitpoints: require('./hitpoints')(),
         isCharacter: require('./is-character')(),
         name: require('./name')(),
         portraitSource: require('./portrait-source')(),
     }
+
+    // I need to tell systems when it is time to run.
+    const System = require('./system/main')(components)
 
     return Object.assign({attach, finalize}, components)
 }
