@@ -134,7 +134,7 @@ const onSync = (sendReply) => {
 
 // I need to handle each distinct message from the server in its own way.
 const MessageHandlers = {
-    CallComponent: require('src/sharedUI/call-component')({C, onUpdate}),
-    InitialSync: data => require('src/sharedUI/initial-sync')({data, socket, C, onSync}),
+    CallComponent: require('src/ui/shared/call-component')({C, onUpdate}),
+    InitialSync: data => require('src/ui/shared/initial-sync')({data, socket, C, onSync}),
     SetPlayerName,
 }

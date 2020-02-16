@@ -12,7 +12,7 @@ module.exports = ({data, socket, C, onSync}) => {
     assert(database, 'The InitialSync message did not have a database attribute.')
 
     // Now that we have a client ID we can initialize the module that let's us talk to the server.
-    const sendReply = require('src/sharedUI/send-reply')({clientID, socket})
+    const sendReply = require('src/ui/shared/send-reply')({clientID, socket})
 
     // I expect the database to have component data, even if it is empty.
     assert(database.componentData, 'The InitialSync database did not have componentData.')

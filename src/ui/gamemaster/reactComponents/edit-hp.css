@@ -1,0 +1,57 @@
+.maxHP {
+    border-collapse: collapse;
+    display: inline-block;
+}
+
+.maxHP thead {
+    border-bottom: solid 1px;
+}
+
+.maxHP tbody th {
+    font-weight: normal;
+    text-align: right;
+}
+
+.maxHP tbody td {
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+.maxHP tbody tr:last-child th {
+    border-top: solid 1px;
+}
+
+.maxHP tbody tr:last-child td {
+    border-top: solid 1px;
+}
+
+.editDamage {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+}
+
+.editDamage table {
+    border-collapse: collapse;
+}
+
+.editDamage thead {
+    border-bottom: solid 1px;
+}
+
+.editDamage tbody th {
+    font-weight: normal;
+    text-align: right;
+}
+
+.editDamage tbody td {
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+.editDamage button {
+    padding: 4px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 5px;
+}

@@ -56,15 +56,17 @@ let rerender
 const onSync = (sendReply) => {
     send = sendReply.send
     reply = sendReply.reply
-    rerender = require('./character-list')({r, e, C, send})
+    const CharacterList = require('./reactComponents/character-list')({e, C})
+    rerender = () => r(e(CharacterList))
+    rerender()
 }
 
 const onUpdate = () => {
-    rerender()
+    rerender ? rerender() : undefined
 }
 
 // The gamemaster doesn't set a player name.
 const MessageHandlers = {
-    CallComponent: require('src/sharedUI/call-component')({C, onUpdate}),
-    InitialSync: data => require('src/sharedUI/initial-sync')({data, socket, C, onSync}),
+    CallComponent: require('src/ui/shared/call-component')({C, onUpdate}),
+    InitialSync: data => require('src/ui/shared/initial-sync')({data, socket, C, onSync}),
 }

@@ -1,10 +1,10 @@
-// This defines the player user interface
+// This defines the gamemaster user interface
 
 const path = require('path')
 
 module.exports = {
     entry: {
-        playerUI: path.resolve(__dirname, 'main.js'),
+        harnessUI: path.resolve(__dirname, 'main.js'),
     },
     output: {
         filename: '[name].dist.js',
@@ -29,11 +29,11 @@ module.exports = {
     resolve: {
         modules: [
             'node_modules',
-            path.resolve(__dirname, '../..'),
+            path.resolve(__dirname, '../../..'),
         ]
     },
     devtool: 'source-map',
     devServer: {
-        port: 8082,
+        port: 8081,
     },
 }

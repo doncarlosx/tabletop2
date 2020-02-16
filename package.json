@@ -1,9 +1,10 @@
 {
   "name": "tabletop2",
   "scripts": {
-    "server": "nodemon main.js",
-    "playerUI": "webpack-dev-server --config src/playerUI/webpack.config.js",
-    "gamemasterUI": "webpack-dev-server --config src/gamemasterUI/webpack.config.js"
+    "server": "nodemon -w src/component -w src/function main.js",
+    "playerUI": "webpack-dev-server --config src/ui/player/webpack.config.js",
+    "gamemasterUI": "webpack-dev-server --config src/ui/gamemaster/webpack.config.js",
+    "harnessUI": "webpack-dev-server --config src/ui/harness/webpack.config.js"
   },
   "devDependencies": {
     "css-loader": "^3.4.2",
