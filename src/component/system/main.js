@@ -1,9 +1,9 @@
 // This is the top level handle to all systems that derive component data.
 
-module.exports = C => {
+module.exports = ({C, F}) => {
     const systems = {
-        hitdice: require('./hitdice')(C),
-        hitpoints: require('./hitpoints')(C)
+        hitdice: require('./hitdice')({C, F}),
+        hitpoints: require('./hitpoints')({C, F})
     }
 
     // There's no point making every system rewrite derivesFrom.

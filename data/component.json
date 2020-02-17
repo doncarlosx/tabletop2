@@ -30,6 +30,7 @@
         {
           "name": "Monk",
           "hitDie": {
+            "dice": "1D8",
             "roll": 8
           },
           "favoredBonus": "hitpoint"
@@ -37,6 +38,7 @@
         {
           "name": "Monk",
           "hitDie": {
+            "dice": "1D8",
             "roll": 1
           },
           "favoredBonus": "hitpoint"
@@ -44,6 +46,7 @@
         {
           "name": "Monk",
           "hitDie": {
+            "dice": "1D8",
             "roll": 4
           },
           "favoredBonus": "hitpoint"
@@ -51,6 +54,7 @@
         {
           "name": "Monk",
           "hitDie": {
+            "dice": "1D8",
             "roll": 7
           },
           "favoredBonus": "skillpoint"

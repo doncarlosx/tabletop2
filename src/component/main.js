@@ -59,12 +59,19 @@ module.exports = () => {
         hitdice: require('./hitdice')(),
         hitpoints: require('./hitpoints')(),
         isCharacter: require('./is-character')(),
+        lethalDamage: require('./lethal-damage')(),
         name: require('./name')(),
+        nonLethalDamage: require('./non-lethal-damage')(),
         portraitSource: require('./portrait-source')(),
     }
 
-    // I need to tell systems when it is time to run.
-    const System = require('./system/main')(components)
+    // I don't want to be chasing down a bunch of requires if I move things around.
+    const F = {
+        numberWithSign: require('../functions/number-with-sign')
+    }
 
-    return Object.assign({attach, finalize}, components)
+    // I need to tell systems when it is time to run.
+    const System = require('./system/main')({C: components, F})
+
+    return Object.assign({attach, finalize, S: System}, components)
 }

@@ -20,10 +20,18 @@ module.exports = () => {
         return hitDice.map(hitDie => hitDie.roll).filter(roll => roll !== undefined)
     }
 
+    const getAllDiceAndRolls = entity => {
+        const hitDice = byEntity[entity] || []
+        return hitDice.map(hitDice => {
+            return [hitDice.dice, hitDice.roll]
+        })
+    }
+
     return {
         attach,
         set,
         getAllRolls,
+        getAllDiceAndRolls,
     }
 
 }

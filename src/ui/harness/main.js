@@ -24,17 +24,13 @@ socket.addEventListener('message', ({data}) => {
 const C = require('src/component/main')()
 let send, reply
 let rerender
-const E = require('src/ui/gamemaster/reactComponents/edit-hp')({e, C})
-
-window.C = C
-window.E = E
-window.e = e
-window.r = r
 
 const onSync = (sendReply) => {
     send = sendReply.send
     reply = sendReply.reply
-    r(e(E))
+    const E = require('src/ui/gamemaster/reactComponents/edit-hp')({e, C, send})
+    rerender = () => r(e(E, {entity: '1'}))
+    rerender()
 }
 
 const onUpdate = () => {

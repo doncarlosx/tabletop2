@@ -49,8 +49,9 @@ module.exports = ({e, C}) => {
         }
 
         hpClick() {
+            const {entity} = this.props
             const onBackground = () => this.setState({modal: undefined})
-            const modal = e(Modal, {visible: true, onBackground}, e(EditHP))
+            const modal = e(Modal, {visible: true, onBackground}, e(EditHP, {entity}))
             this.setState({modal})
         }
 

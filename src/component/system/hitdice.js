@@ -1,6 +1,6 @@
 // This system derives hit dice from other components.
 
-module.exports = C => {
+module.exports = ({C, F}) => {
 
     const rebuild = entity => {
         const hitDice = C.classes.getHitDiceFromClasses(entity)
