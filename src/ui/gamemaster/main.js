@@ -56,7 +56,7 @@ let rerender
 const onSync = (sendReply) => {
     send = sendReply.send
     reply = sendReply.reply
-    const CharacterList = require('./reactComponents/character-list')({e, C})
+    const CharacterList = require('./reactComponents/character-list')({e, C, send})
     rerender = () => r(e(CharacterList))
     rerender()
 }

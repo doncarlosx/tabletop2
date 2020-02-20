@@ -9,7 +9,8 @@ module.exports = ({C, F}) => {
         explainAsEntries(entity).forEach(([_, hp]) => {
             maxHP += Number(hp)
         })
-        C.hitpoints.set(entity, {current: maxHP, max: maxHP})
+        const current = maxHP - C.lethalDamage.getTotal(entity)
+        C.hitpoints.set(entity, {current, max: maxHP})
     }
 
     const explainAsEntries = entity => {
@@ -34,6 +35,7 @@ module.exports = ({C, F}) => {
             C.classes,
             C.constitution,
             C.hitdice,
+            C.lethalDamage,
         ],
     }
 

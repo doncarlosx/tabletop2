@@ -4,10 +4,10 @@ const hpString = require('src/functions/hp-string')
 
 const css = require('./character-list-item.css')
 
-module.exports = ({e, C}) => {
+module.exports = ({e, C, send}) => {
 
     const Modal = require('src/ui/shared/reactComponents/modal')({e})
-    const EditHP = require('./edit-hp')({e, C})
+    const EditHP = require('./edit-hp')({e, C, send})
 
     return class extends React.Component {
 

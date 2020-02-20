@@ -44,14 +44,24 @@ module.exports = ({e, C, send}) => {
 
         editLethal() {
             const {entity} = this.props
-            const onSubmit = () => {
-                console.info('submit lethal')
+            const {waiting} = this.state
+            const onSubmit = value => {
+                this.setState({waiting: true})
+                send({
+                    command: 'CallComponent',
+                    name: 'lethalDamage',
+                    method: 'setTotal',
+                    args: [entity, value],
+                }).finally(() => {
+                    this.setState({waiting: false})
+                })
             }
-            // return this.editDamage({
-            //     title: 'Lethal Damage',
-            //     applied: C.lethalDamage.getTotal(entity),
-            //     onSubmit,
-            // })
+            return e(EditDamage, {
+                title: 'Lethal Damage',
+                applied: C.lethalDamage.getTotal(entity),
+                onSubmit,
+                disabled: waiting,
+            })
         }
 
         editNonLethal() {
@@ -74,21 +84,6 @@ module.exports = ({e, C, send}) => {
                 onSubmit,
                 disabled: waiting,
             })
-        }
-
-        editDamage({title, applied, onSubmit}) {
-            return e('div', {className: css.editDamage},
-                e('table', null,
-                    e('thead', null,
-                        e('tr', null, e('th', {colSpan: 2}, title)),
-                    ),
-                    e('tbody', null,
-                        e('tr', null, e('th', null, 'Applied'), e('td', null, applied)),
-                        e('tr', null, e('th', null, 'Set To'), e('td', null, e('input'))),
-                    ),
-                ),
-                e('div', null, e('button', {onClick: onSubmit}, 'Apply')),
-            )
         }
     }
 }

@@ -27,10 +27,15 @@ module.exports = ({e}) => {
             assert(disabled !== undefined, error('disabled'))
 
             return e('div', {className: css.editDamage},
+
                 e('table', null,
+
+                    // A header to describe what type of damage this is.
                     e('thead', null,
                         e('tr', null, e('th', {colSpan: 2}, title)),
                     ),
+
+                    // A body to accept user input.
                     e('tbody', null,
                         e('tr', null,
                             e('th', null, 'Applied'),
@@ -45,7 +50,10 @@ module.exports = ({e}) => {
                             })),
                         ),
                     ),
+
                 ),
+
+                // A button to submit.
                 e('div', null, e('button', {
                     onClick: () => this.onClick(),
                     disabled: disabled ? 'disabled' : '',

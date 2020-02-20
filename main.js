@@ -136,7 +136,9 @@ function CallComponent(socket, data) {
     // All clients should apply this change, including the original sender.
     const message = JSON.stringify(data)
     sockets.forEach(socket => {
-        socket.send(message)
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(message)
+        }
     })
 }
 
