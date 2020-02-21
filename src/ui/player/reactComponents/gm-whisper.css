@@ -1,0 +1,22 @@
+.container {
+    text-align: center;
+}
+
+.title {
+    font-size: 0.9em;
+    font-weight: normal;
+    color: #444;
+}
+
+.message {
+    font-family: system-ui;
+    text-align: left;
+    border: solid 1px #aaa;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+
+.close {
+    padding: 5px 15px;
+    border: solid 1px;
+}

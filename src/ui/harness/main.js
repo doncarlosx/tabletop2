@@ -28,8 +28,37 @@ let rerender
 const onSync = (sendReply) => {
     send = sendReply.send
     reply = sendReply.reply
-    const E = require('src/ui/gamemaster/reactComponents/edit-hp')({e, C, send})
-    rerender = () => r(e(E, {entity: '1'}))
+    const E1 = require('src/ui/player/reactComponents/prompt-roll')({e, send})
+    const rolls = [
+        {
+            dice: '2d8+3',
+            subtext: 'to damage bad guy one',
+        },
+        {
+            dice: '1d20+8',
+        },
+        {
+            dice: '2d8+3',
+            subtext: 'to avoid poison darts',
+        },
+        {
+            dice: '1d20+perception',
+            subtext: 'to detect no traps',
+        },
+    ]
+    const E2 = require('src/ui/player/reactComponents/gm-whisper')({e})
+    const M = require('src/ui/shared/reactComponents/modal')({e})
+    const onBackground = () => console.info('background')
+    const visible = true
+    let message = `Zaid's hands shift under her cloak.
+
+She is probably checking which wands she brought.`
+    message = `You hear a huffing sound along the bottom of the door.
+
+A shadow briefly blocks moonlight along the bottom crack.`
+    const onClose = () => console.info('close')
+    rerender = () => r(e(M, {onBackground, visible}, e(E1, {rolls, onClose})))
+    // rerender = () => r(e(M, {onBackground, visible}, e(E2, {message, onClose})))
     rerender()
 }
 
