@@ -132,9 +132,36 @@ const onSync = (sendReply) => {
     require('./welcome-screen')({r, e, send, nextScreen})
 }
 
+// Whispers are shown in a modal.
+const Modal = require('src/ui/shared/reactComponents/modal')({e})
+const Whisper = require('./reactComponents/gm-whisper')({e})
+
+const GMWhisper = ({message}) => {
+    const onClose = () => rerender()
+    const whisper = e(Whisper, {message, onClose})
+    const visible = true
+    const onBackground = () => null
+    const modal = e(Modal, {onBackground, visible}, whisper)
+    rerender(modal)
+}
+
+// Roll prompts are shown in a modal.
+const PromptRoll = require('./reactComponents/prompt-roll')({e})
+
+const GMPromptRolls = ({rolls}) => {
+    const onClose = () => rerender()
+    const prompt = e(PromptRoll, {rolls, onClose})
+    const visible = true
+    const onBackground = () => null
+    const modal = e(Modal, {onBackground, visible}, prompt)
+    rerender(modal)
+}
+
 // I need to handle each distinct message from the server in its own way.
 const MessageHandlers = {
     CallComponent: require('src/ui/shared/call-component')({C, onUpdate}),
     InitialSync: data => require('src/ui/shared/initial-sync')({data, socket, C, onSync}),
     SetPlayerName,
+    GMWhisper,
+    GMPromptRolls,
 }

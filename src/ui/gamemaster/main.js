@@ -56,8 +56,14 @@ let rerender
 const onSync = (sendReply) => {
     send = sendReply.send
     reply = sendReply.reply
+    const RollControls = require('./reactComponents/roll-controls')({e, C, send})
+    const WhisperControls = require('./reactComponents/whisper-controls')({e, C, send})
     const CharacterList = require('./reactComponents/character-list')({e, C, send})
-    rerender = () => r(e(CharacterList))
+    rerender = () => r(e('div', null,
+        e(RollControls),
+        e(WhisperControls),
+        e(CharacterList),
+    ))
     rerender()
 }
 
@@ -69,4 +75,6 @@ const onUpdate = () => {
 const MessageHandlers = {
     CallComponent: require('src/ui/shared/call-component')({C, onUpdate}),
     InitialSync: data => require('src/ui/shared/initial-sync')({data, socket, C, onSync}),
+    GMWhisper: () => null,
+    GMPromptRolls: () => null,
 }

@@ -1,0 +1,26 @@
+.container {
+    border: solid 1px #777;
+    padding: 10px;
+}
+
+.title {
+    font-size: 1em;
+}
+
+.list {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: top;
+}
+
+.controls {
+    display: inline-block;
+}
+
+.controls textarea {
+    display: block;
+}
+
+.send {
+    padding: 5px 15px;
+}

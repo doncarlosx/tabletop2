@@ -66,7 +66,7 @@ module.exports = ({e, send}) => {
             const {onClose} = this.props
             assert(onClose, 'The PromptRoll component was rendered without the required onClose property.')
 
-            return e('button', {className: css.close}, 'Close')
+            return e('button', {className: css.close, onClick: () => onClose()}, 'Close')
         }
     }
 }

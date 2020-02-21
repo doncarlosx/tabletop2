@@ -1,7 +1,7 @@
 {
   "name": "tabletop2",
   "scripts": {
-    "server": "nodemon -w src/component -w src/function main.js",
+    "server": "nodemon -w src/component -w src/function -w main.js main.js",
     "playerUI": "webpack-dev-server --config src/ui/player/webpack.config.js",
     "gamemasterUI": "webpack-dev-server --config src/ui/gamemaster/webpack.config.js",
     "harnessUI": "webpack-dev-server --config src/ui/harness/webpack.config.js"

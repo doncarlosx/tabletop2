@@ -35,7 +35,7 @@ module.exports = ({r, e, C, thisPlayersName, send}) => {
     }
 
     // If anything changes I need to re-aggreate and re-draw.
-    const render = () => {
+    const render = (modal) => {
         // I need to aggregate the required data for all characters.
         const characters = C.isCharacter.listAllEntities().map(entity => {
             const playerName = C.claimedByPlayer.getPlayerName(entity) || ''
@@ -58,9 +58,12 @@ module.exports = ({r, e, C, thisPlayersName, send}) => {
             }
         })
 
-        r(e('div', undefined, ...characters.map(character => {
-            return e(PlayerListItem, character)
-        })))
+        r(e('div', undefined,
+            ...characters.map(character => {
+                return e(PlayerListItem, character)
+            }),
+            modal,
+        ))
     }
 
     render()

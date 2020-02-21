@@ -95,13 +95,8 @@ server.on('connection', socket => {
     })
 })
 
-const MessageHandlers = {
-    CallComponent,
-    SetPlayerName
-}
-
 // A client is trying to modify component data.
-function CallComponent(socket, data) {
+const CallComponent = (socket, data) => {
     const {name, method, args} = data
 
     // I expect the message to have a component name and method.
@@ -136,14 +131,14 @@ function CallComponent(socket, data) {
     // All clients should apply this change, including the original sender.
     const message = JSON.stringify(data)
     sockets.forEach(socket => {
-        if (socket.readyState === WebSocket.OPEN) {
+        if (socketReady(socket)) {
             socket.send(message)
         }
     })
 }
 
 // A client is trying to choose their unique player name.
-function SetPlayerName(socket, data) {
+const SetPlayerName = (socket, data) => {
     const {name} = data
 
     // Every player must have a unique name.
@@ -167,3 +162,73 @@ const sockets = []
 
 // We need a place to store player names associated with sockets.
 const playersBySocket = new Map()
+
+// The GM is sending a message to some players via their claimed characters.
+const GMWhisper = (socket, data) => {
+    const {entities} = data
+
+    // Only need to track each player once.
+    const players = new Set()
+
+    // The server is the authority on who has claimed whom.
+    entities.forEach(entity => {
+        const player = C.claimedByPlayer.getPlayerName(entity)
+        if (player) {
+            players.add(player)
+        }
+    })
+
+    // Just echo.
+    const message = JSON.stringify(data)
+
+    // Let connected players know.
+    for (let [socket, player] of playersBySocket.entries()) {
+        if (players.has(player) && socketReady(socket)) {
+            socket.send(message)
+        }
+    }
+
+    // Let the gm client know that we're done.
+    socket.send(message)
+}
+
+// The GM is asking for rolls.
+// TODO: why is this copy paste of GMWhisper
+const GMPromptRolls = (socket, data) => {
+    const {entities} = data
+
+    // Only need to track each player once.
+    const players = new Set()
+
+    // The server is the authority on who has claimed whom.
+    entities.forEach(entity => {
+        const player = C.claimedByPlayer.getPlayerName(entity)
+        if (player) {
+            players.add(player)
+        }
+    })
+
+    // Just echo.
+    const message = JSON.stringify(data)
+
+    // Let connected players know.
+    for (let [socket, player] of playersBySocket.entries()) {
+        if (players.has(player) && socketReady(socket)) {
+            socket.send(message)
+        }
+    }
+
+    // Let the gm client know that we're done.
+    socket.send(message)
+}
+
+const socketReady = socket => {
+    return socket.readyState === WebSocket.OPEN
+}
+
+const MessageHandlers = {
+    CallComponent,
+    SetPlayerName,
+    GMWhisper,
+    GMPromptRolls,
+}

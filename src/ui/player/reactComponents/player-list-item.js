@@ -37,7 +37,7 @@ module.exports = ({e}) => class extends React.Component {
     portrait() {
         const {portraitSource} = this.props
         if (portraitSource) {
-            return e('img', {className: css.portrait, src: '/data/topher.png'})
+            return e('img', {className: css.portrait, src: portraitSource})
         }
     }
 
@@ -65,7 +65,7 @@ module.exports = ({e}) => class extends React.Component {
         const unclaim = e('button', {onClick: doUnclaim}, 'unclaim')
         return e('div', {className:css.controls},
             claimed ? unclaim : claim,
-            e('button', {onClick: doView}, 'view'),
+            // e('button', {onClick: doView}, 'view'),
         )
     }
 

@@ -1,17 +1,35 @@
 {
   "name": {
     "byEntity": {
-      "1": "Topher"
+      "1": "Topher",
+      "2": "Morgana",
+      "3": "Eidy",
+      "4": "Nym Wolfsbane",
+      "5": "Ravyn",
+      "6": "Ravyn's Raven",
+      "7": "Nym's Fox",
+      "8": "Nightshade the Horse"
     }
   },
   "isCharacter": {
     "byEntity": {
-      "1": true
+      "1": true,
+      "2": true,
+      "3": true,
+      "4": true,
+      "5": true,
+      "6": true,
+      "7": true,
+      "8": true
     }
   },
   "portraitSource": {
     "byEntity": {
-      "1": "/data/topher.png"
+      "1": "/data/topher.png",
+      "2": "/data/morgana.png",
+      "3": "/data/eidy.png",
+      "4": "/data/nym.png",
+      "5": "/data/ravyn.png"
     }
   },
   "race": {
@@ -59,6 +77,134 @@
           },
           "favoredBonus": "skillpoint"
         }
+      ],
+      "2": [
+        {
+          "name": "Summoner",
+          "hitDie": {
+            "dice": "1D8",
+            "roll": 8
+          },
+          "favoredBonus": "skillpoint"
+        },
+        {
+          "name": "Barbarian",
+          "hitDie": {
+            "dice": "1D12",
+            "roll": 3
+          }
+        },
+        {
+          "name": "Summoner",
+          "hitDie": {
+            "dice": "1D8",
+            "roll": 7
+          },
+          "favoredBonus": "skillpoint"
+        },
+        {
+          "name": "Summoner",
+          "hitDie": {
+            "dice": "1D8",
+            "roll": 8
+          },
+          "favoredBonus": "skillpoint"
+        }
+      ],
+      "4": [
+        {
+          "name": "Ranger",
+          "hitDie": {
+            "dice": "1D10",
+            "roll": 10
+          },
+          "favoredBonus": "skillpoint"
+        },
+        {
+          "name": "Ranger",
+          "hitDie": {
+            "dice": "1D10",
+            "roll": 8
+          },
+          "favoredBonus": "hitpoint"
+        },
+        {
+          "name": "Druid",
+          "hitDie": {
+            "dice": "1D8",
+            "roll": 7
+          }
+        }
+      ],
+      "5": [
+        {
+          "name": "Witch",
+          "hitDie": {
+            "dice": "1D6",
+            "roll": 6
+          },
+          "favoredBonus": "skillpoint"
+        },
+        {
+          "name": "Witch",
+          "hitDie": {
+            "dice": "1D6",
+            "roll": 4
+          },
+          "favoredBonus": "hitpoint"
+        },
+        {
+          "name": "Witch",
+          "hitDie": {
+            "dice": "1D6",
+            "roll": 5
+          },
+          "favoredBonus": "hitpoint"
+        }
+      ]
+    }
+  },
+  "hitdice": {
+    "byEntity": {
+      "3": [
+        {
+          "dice": "1D10",
+          "roll": 4
+        },
+        {
+          "dice": "1D10",
+          "roll": 10
+        },
+        {
+          "dice": "1D10",
+          "roll": 8
+        }
+      ],
+      "6": [
+        {
+          "dice": "1D8",
+          "roll": 8
+        }
+      ],
+      "7": [
+        {
+          "dice": "1D8",
+          "roll": 5
+        },
+        {
+          "dice": "1D8",
+          "roll": 4
+        }
+      ],
+      "8": [
+        {
+          "dice": "1D8",
+          "roll": 5
+        },
+        {
+          "dice": "1D8",
+          "roll": 4
+        }
       ]
     }
   },
@@ -75,6 +221,34 @@
       "1": {
         "base": 9,
         "current": 9
+      },
+      "2": {
+        "base": 10,
+        "current": 10
+      },
+      "3": {
+        "base": 13,
+        "current": 13
+      },
+      "4": {
+        "base": 9,
+        "current": 7
+      },
+      "5": {
+        "base": 11,
+        "current": 11
+      },
+      "6": {
+        "base": 8,
+        "current": 8
+      },
+      "7": {
+        "base": 15,
+        "current": 15
+      },
+      "8": {
+        "base": 17,
+        "current": 17
       }
     }
   }
